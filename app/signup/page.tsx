@@ -1,9 +1,40 @@
+"use client"
 import Link from "next/link";
+import {useFormik} from "formik"
+import * as yup from "yup"
+import axios from "axios";
 const Signup = () => {
+
+  const formik = useFormik({
+    initialValues: {
+      email: "",
+      username: "",
+      phonenumber: -1,
+      password:''
+    },
+    onSubmit: async () => {
+      try {
+            console.log(formik.values);
+        // const createAccount = await axios.post("/", formik.values)
+        
+      } catch (error) {
+        
+      }
+   
+       
+    },
+    validationSchema: yup.object({
+      email: yup.string().email('Enter a valid email').required("Email is required"),
+      username: yup.string().trim().required('Username is required'),
+      phonenumber: yup.number().required().min(10, 'Inavlid Phone number'),
+      password:yup.string().required('Password is required').min(6)
+    })
+
+  })
   return (
     <div className="w-full h-full fixed flex justify-center items-center">
       <div className=" w-52 h-full fixed left-0  bg-black"></div>
-      <form className="w-96 border rounded-sm border-gray-300" action="">
+      <form  onSubmit={formik.handleSubmit} className="w-96 border rounded-sm border-gray-300" action="">
         <div className="py-5">
           <h1 className="text-center text-gray-500 font-bold text-xl">
             Tacky Toe
@@ -14,16 +45,18 @@ const Signup = () => {
         </div>
         <div className="w-4/5 mx-auto mb-2">
           <label className="block text-sm py-1 text-gray-500">Email</label>
-          <input
-            type="text"
-            className="w-full rounded-sm h-10 border border-gray-300"
+          
+          <input name="email"
+            type="text" onBlur={formik.handleBlur} onChange={formik.handleChange}
+            className={`w-full pl-2 text-sm rounded-sm h-10 border border-gray-300  ${formik.errors.email && 'error-input'}`}
           />
+          {formik.errors.email && <p className="text-xs  text-red-600">{formik.errors.email}</p>}
         </div>
         <div className="w-4/5 mx-auto mb-2">
           <label className="block text-sm py-1 text-gray-500">Username</label>
-          <input
-            type="text"
-            className="w-full rounded-sm h-10 border border-gray-300"
+          <input name="username"
+            type="text" onBlur={formik.handleBlur} onChange={formik.handleChange}
+            className={`w-full pl-2 text-sm rounded-sm h-10 border border-gray-300 `}
           />
         </div>
 
@@ -31,19 +64,21 @@ const Signup = () => {
           <label className="block text-sm py-1 text-gray-500">
             Phone-number
           </label>
-          <input
-            type="number"
-            className="w-full rounded-sm h-10 border border-gray-300"
+          <input   
+            type="number" onBlur={formik.handleBlur} onChange={formik.handleChange} name="phonenumber"
+            className={`w-full   pl-2 text-sm rounded-sm h-10 border border-gray-300 ${formik.errors.phonenumber && 'error-input'}`}
           />
+            {formik.errors.phonenumber && <p className="text-xs  text-red-600">{formik.errors.phonenumber}</p>}
         </div>
         <div className="w-4/5 mx-auto">
           <label className="block text-sm py-1 text-gray-500">
             Password
           </label>
-          <input
-            type="password"
-            className="w-full rounded-sm h-10 border border-gray-300"
+          <input onChange={formik.handleChange}
+            type="password" onBlur={formik.handleBlur} name="password"
+            className={`w-full pl-2 text-sm rounded-sm h-10 border border-gray-300 ${formik.errors.password && 'error-input'}`}
           />
+          {formik.errors.password && <p className="text-xs text-red-600">{formik.errors.password}</p>}
         </div>
         <div className="w-4/5 py-2 mx-auto flex justify-between items-center">
           <div>
@@ -59,7 +94,7 @@ const Signup = () => {
           </div>
         </div>
         <div className="w-4/5 mx-auto mb-6">
-          <button className="w-full text-white text-sm h-10 bg-black rounded-sm">
+          <button type="submit" className="w-full text-white text-sm h-10 bg-black rounded-sm">
             Create
           </button>
         </div>
