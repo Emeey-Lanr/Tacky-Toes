@@ -1,0 +1,14 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+input:focus{
+outline: 2px solid #00000062;
+}
+.error-input{
+  outline: 2px solid #ff000062;
+}
+.success-input{
+  outline: 2px solid #00ff1e62;
+}
+
