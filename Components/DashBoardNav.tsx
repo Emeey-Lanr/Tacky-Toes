@@ -3,7 +3,7 @@ import logo from "../public/icon/logo.svg"
 import search from "../public/icon/search.svg"
 const DashBoardNav = () => {
   return (
-    <div className="w-full sticky top-0">
+    <div className="w-full sticky top-0 bg-white">
       <div className="mx-auto py-8 w-4/5 flex justify-between items-center">
         <div>
           <Image className="w-10 h-10" src={logo} alt="logo" />

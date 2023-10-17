@@ -1,8 +1,9 @@
-import DashBoardNav from "@/Component/DashBoardNav"
+import DashBoardNav from "@/Components/DashBoardNav"
+
 const Dashboard = () => {
     return (
         <div>
-            <DashBoardNav/>
+    <DashBoardNav/>
         
         </div>
 
