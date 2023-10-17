@@ -1,6 +1,6 @@
 import './globals.css'
-import {configureStore } from "@reduxjs/toolkit"
-import {Provider} from "react-redux"
+import { ReduxProvider } from '@/Redux/provider';
+
 
 export const metadata = {
   title: 'Tacky Toe',
@@ -11,10 +11,18 @@ export default function RootLayout({
   children,
 }: {
   children: React.ReactNode
-}) {
+  }) {
+  
   return (
     <html lang="en">
-      <body>{children}</body>
+     
+      <body>
+        <ReduxProvider>
+              {children}
+      </ReduxProvider>
+      
+      </body>
+     
     </html>
-  )
+  );
 }

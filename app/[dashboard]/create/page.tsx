@@ -6,8 +6,22 @@ import axios from "axios"
 import Image from "next/image"
 import linkIcon from "@/public/icon/link-icon.svg"
 import loading from "@/public/icon/loading.svg"
-const CreateGame = () => {
+import  {useSelector, useDispatch} from "react-redux"
+import { RootState, AppDispatch } from "@/Redux/store"
+import { phaseCreationChangeR } from "@/Redux/Constituents/CreateGame"
+import { useRef } from "react"
 
+const CreateGameBoard = () => {
+  const gameCreationRef = useRef<HTMLDivElement>(null)
+  const dispatch = useDispatch<AppDispatch>()
+  const createGameInfo = useSelector((state: RootState) => state.CreateGame.value)
+  
+  const changeState = (loading:number, phase_text:string, player_name:string, game_name:string, game_link:string) => {
+       dispatch(
+         phaseCreationChangeR({loading, phase_text, player_name, game_name,game_link })
+       );
+    
+  }
     const formik = useFormik({
       initialValues: {
         game_name: "",
@@ -15,9 +29,13 @@ const CreateGame = () => {
       },
         onSubmit: async() => {
           try {
-            
+            gameCreationRef.current?.scrollIntoView()
+            changeState(1, "Creating Game", "", "", "");
+            const createGameAPIRoute = await axios.post("/", {
+              formPayload: formik.values,
+            });
           } catch (error) {
-            
+           changeState(3, ``, "","", "" ) 
           }
       },
         validationSchema: yup.object({
@@ -80,54 +98,66 @@ const CreateGame = () => {
             </button>
           </div>
         </form>
-        <div className="w-4/5 py-6 mx-auto border border-gray-200 rounded-md">
-          <div className="py-4">
-            <h1 className="text-center">Your game has been created</h1>
+        {createGameInfo.loading > 0 && (
+          <div className="w-4/5 py-6 mx-auto border border-gray-200 rounded-md">
+            <div className="py-4">
+              <h1 className="text-center">{createGameInfo.phase_text}</h1>
+            </div>
+
+            {/* Creating Game */}
+            {createGameInfo.loading === 1 && (
+              <div className="w-4/5 mx-auto  flex justify-center items-center h-24">
+                <Image className="loading" src={loading} alt="" />
+              </div>
+            )}
+
+            {/* Game created Succesfully */}
+            {createGameInfo.loading === 2 && (
+              <div className="w-full">
+                <div className="w-4/5 py-4 mx-auto flex justify-between items-center">
+                  <div className="w-2/5">
+                    <p className="py-1 text-sm text-gray-600">Game Name</p>
+                    <div className="h-10 w-full bg-black rounded-md text-sm text-white">
+                      <p></p>
+                    </div>
+                  </div>
+                  <div className="w-2/5">
+                    <p className="py-1 text-sm text-gray-600">Player's Name</p>
+                    <div className="h-10 w-full bg-black rounded-md text-sm text-white">
+                      <p></p>
+                    </div>
+                  </div>
+                </div>
+                <div className="flex  justify-center items-center py-6">
+                  <div>
+                    <Image className="h-5 w-5" src={linkIcon} alt="" />
+                  </div>
+                  <p className="text-sm px-3 text-gray-800">
+                    http://localhost:3000/emeey/play/tunde/473474747
+                  </p>
+                </div>
+                <div className="flex justify-center items-center mt-4">
+                  <button className="text-white text-sm h-10 w-1/4 bg-black rounded-md ">
+                    proceed to dashboard
+                  </button>
+                </div>
+              </div>
+            )}
+
+            {/* Unable to create game, error */}
+            {createGameInfo.loading === 3 && (
+              <div className="w-8/12  h-24 mx-auto  rounded-md bg-red-300 flex justify-center items-center">
+                <p className="text-sm text-gray-600 ">
+                  Unable to create, an error occured
+                </p>
+              </div>
+            )}
           </div>
-          {/* Unable to create game, error */}
-          {/* <div className="w-8/12  h-24 mx-auto  rounded-md bg-red-300 flex justify-center items-center">
-                  <p className="text-sm text-gray-600 ">Unable to create, an error occured</p>
-          </div> */}
-
-          {/* Creating Game */}
-          {/* <div className="w-4/5 mx-auto  flex justify-center items-center h-24">
-            <Image className="loading" src={loading} alt="" />
-          </div> */}
-
-          {/* Game created Succesfully */}
-          {/* <div className="w-full">
-            <div className="w-4/5 py-4 mx-auto flex justify-between items-center">
-              <div className="w-2/5">
-                <p className="py-1 text-sm text-gray-600">Game Name</p>
-                <div className="h-10 w-full bg-black rounded-md text-sm text-white">
-                  <p></p>
-                </div>
-              </div>
-              <div className="w-2/5">
-                <p className="py-1 text-sm text-gray-600">Player's Name</p>
-                <div className="h-10 w-full bg-black rounded-md text-sm text-white">
-                  <p></p>
-                </div>
-              </div>
-            </div>
-            <div className="flex  justify-center items-center py-6">
-              <div>
-                <Image className="h-5 w-5" src={linkIcon} alt="" />
-              </div>
-              <p className="text-sm px-3 text-gray-800">
-                http://localhost:3000/emeey/play/tunde/473474747
-              </p>
-            </div>
-            <div className="flex justify-center items-center mt-4">
-              <button className="text-white text-sm h-10 w-1/4 bg-black rounded-md ">
-                proceed to dashboard
-              </button>
-            </div>
-          </div> */}
-        </div>
+        )}
       </div>
+      <div ref={gameCreationRef}  />
     </div>
   );
 }
 
-export default CreateGame
+export default CreateGameBoard

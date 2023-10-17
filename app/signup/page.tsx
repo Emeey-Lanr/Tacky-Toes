@@ -33,8 +33,8 @@ const Signup = () => {
   })
   return (
     <div className="w-full h-full fixed flex justify-center items-center">
-      <div className=" w-52 h-full fixed left-0  bg-black"></div>
-      <form  onSubmit={formik.handleSubmit} className="w-96 border rounded-sm border-gray-300" action="">
+      <div className="w-40 h-full fixed left-0  bg-black"></div>
+      <form  onSubmit={formik.handleSubmit} className="input-size border rounded-md border-gray-300" action="">
         <div className="py-5">
           <h1 className="text-center text-gray-500 font-bold text-xl">
             Tacky Toe
