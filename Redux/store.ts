@@ -1,9 +1,11 @@
 import { configureStore } from "@reduxjs/toolkit"
 import CreateGame from "./Constituents/CreateGame"
+import Error from "./Constituents/Error"
 
 export const store = configureStore({
     reducer: {
-        CreateGame
+        CreateGame,
+        Error
     }
 })
 

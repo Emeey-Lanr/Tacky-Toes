@@ -3,8 +3,12 @@ import Link from "next/link";
 import {useFormik} from "formik"
 import * as yup from "yup"
 import axios from "axios";
-const Signup = () => {
+import Error from "@/Components/Error";
+import { useDispatch } from "react-redux";
+import { AppDispatch } from "@/Redux/store";
 
+const Signup = () => {
+const dispatch = useDispatch<AppDispatch>()
   const formik = useFormik({
     initialValues: {
       email: "",
@@ -18,7 +22,7 @@ const Signup = () => {
         // const createAccount = await axios.post("/", formik.values)
         
       } catch (error) {
-        
+         
       }
    
        
@@ -42,6 +46,9 @@ const Signup = () => {
           <p className="text-center text-light text-gray-500">
             Create An Account
           </p>
+        </div>
+        <div className="w-4/5">
+          <Error height="h-4" />
         </div>
         <div className="w-4/5 mx-auto mb-2">
           <label className="block text-sm py-1 text-gray-500">Email</label>
