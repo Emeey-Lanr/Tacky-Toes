@@ -1,6 +1,10 @@
+'use client'
 import DashBoardNav from "@/Components/DashBoardNav"
-
+import DeleteModal from "@/Components/DeleteModal"
+import { appContext } from "@/appContext/MainAppContext"
+import { useContext } from "react"
 const Dashboard = () => {
+    const {openExitDeleteModal} = useContext(appContext)
     return (
         <div>
             <DashBoardNav />
@@ -14,7 +18,8 @@ const Dashboard = () => {
                             </div>
                         </div>
                         <div>
-                            <button>+</button>
+                            <button
+                                onClick={() => openExitDeleteModal(true, "", "Are you sure you want to delete", 1)}>+</button>
                         </div>
                     </div>
                     <div className="w-11/12 mx-auto my-4">
@@ -24,7 +29,7 @@ const Dashboard = () => {
                 </div>
 
             </div>
-        
+        <DeleteModal/>
         </div>
 
     )

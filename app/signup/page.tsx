@@ -2,12 +2,13 @@
 import Link from "next/link";
 import {useFormik} from "formik"
 import * as yup from "yup"
-import axios from "axios";
 import Error from "@/Components/Error";
 import { useDispatch } from "react-redux";
 import { AppDispatch } from "@/Redux/store";
-
+import { appContext } from "@/appContext/MainAppContext";
+import { useContext } from "react";
 const Signup = () => {
+  const {errorMessageF} = useContext(appContext)
 const dispatch = useDispatch<AppDispatch>()
   const formik = useFormik({
     initialValues: {

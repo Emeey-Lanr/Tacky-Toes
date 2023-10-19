@@ -5,7 +5,10 @@ import Link from "next/link"
 import { useState } from "react"
 import Image from "next/image"
 import Loading from "@/public/icon/loading.svg"
+import { appContext } from "@/appContext/MainAppContext";
+import { useContext } from "react";
 const Signin = () => {
+  const {errorMessageF} = useContext(appContext)
   const [clicked, setClicked] = useState<boolean>(false)
   const formik = useFormik({
     initialValues: {

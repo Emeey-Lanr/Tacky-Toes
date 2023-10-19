@@ -1,3 +1,4 @@
+import { MainAppContext } from '@/appContext/MainAppContext';
 import './globals.css'
 import { ReduxProvider } from '@/Redux/provider';
 
@@ -15,14 +16,11 @@ export default function RootLayout({
   
   return (
     <html lang="en">
-     
       <body>
         <ReduxProvider>
-              {children}
-      </ReduxProvider>
-      
+          <MainAppContext>{children}</MainAppContext>
+        </ReduxProvider>
       </body>
-     
     </html>
   );
 }
