@@ -3,6 +3,8 @@ import DashBoardNav from "@/Components/DashBoardNav"
 import DeleteModal from "@/Components/DeleteModal"
 import { appContext } from "@/appContext/MainAppContext"
 import { useContext } from "react"
+import deleteBtn from "@/public/icon/delete.svg"
+import Image from "next/image"
 const Dashboard = () => {
     const {openExitDeleteModal} = useContext(appContext)
     return (
@@ -17,9 +19,11 @@ const Dashboard = () => {
                           <p className="text-sm ">Zender</p>
                             </div>
                         </div>
-                        <div>
-                            <button
-                                onClick={() => openExitDeleteModal(true, "", "Are you sure you want to delete", 1)}>+</button>
+                        <div className="flex items-end">
+                            <button className="w-8 h-8  rounded-full border border-red-600 flex justify-center items-center"
+                                onClick={() => openExitDeleteModal(true, "Delete Game", "Are you sure you want to delete ?", 1)}>
+                                <Image className="w-4 h-4" src={deleteBtn} alt="delete btn"/>
+                                </button>
                         </div>
                     </div>
                     <div className="w-11/12 mx-auto my-4">

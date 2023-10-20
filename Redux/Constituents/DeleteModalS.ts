@@ -1,6 +1,7 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 
-
+// phase usage is to know what part, cause the delete modal  will 
+// handle different delete from  different delete
 interface DeleteModalValue{
     modal_state: boolean,
     modal_message: string,

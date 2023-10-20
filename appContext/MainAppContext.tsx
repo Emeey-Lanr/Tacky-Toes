@@ -7,11 +7,12 @@ import { changeErrorMessage } from "@/Redux/Constituents/Error"
 import { useDispatch } from "react-redux"
 import { AppDispatch } from "@/Redux/store"
 import { changeProfileModalNumberR } from "@/Redux/Constituents/ProfileModal"
-
+import { useRouter } from "next/navigation"
 // Create one function for deleteModal also
  export const appContext  = createContext(appContextSchema)
 export const MainAppContext = ({children}:{children:React.ReactNode}) => {
     const dispatch = useDispatch<AppDispatch>()
+    const router = useRouter()
     const errorMessageF = (errorMessage:string) => {
         dispatch(changeErrorMessage(errorMessage))
     }
@@ -21,12 +22,17 @@ export const MainAppContext = ({children}:{children:React.ReactNode}) => {
     const openProfileModal = (modalNumber: number) => {
         dispatch(changeProfileModalNumberR(modalNumber))
     }
+    
+    const buttonNavigation = (routeToPushTo:string) => {
+        router.push(`/${routeToPushTo}`)
+    }
     return (
         <appContext.Provider
             value={{
                 openExitDeleteModal,
                 errorMessageF,
-                openProfileModal
+                openProfileModal,
+                buttonNavigation
         }}
         >
             {children}

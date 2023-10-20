@@ -7,6 +7,7 @@ import Image from "next/image"
 import Loading from "@/public/icon/loading.svg"
 import { appContext } from "@/appContext/MainAppContext";
 import { useContext } from "react";
+import sideImg from "@/public/icon/nav-side-icon.svg"
 const Signin = () => {
   const {errorMessageF} = useContext(appContext)
   const [clicked, setClicked] = useState<boolean>(false)
@@ -25,7 +26,9 @@ const Signin = () => {
   })
   return (
     <div className="w-full h-full fixed flex justify-center items-center">
-      <div className="w-40 h-full fixed left-0  bg-black"></div>
+      <div className="w-40 h-full fixed left-0  bg-black dashboardNav:hidden">
+        <Image src={sideImg} alt="sideImage" />
+      </div>
       <form
         onSubmit={formik.handleSubmit}
         className="input-size border rounded-md border-gray-300"
@@ -83,12 +86,17 @@ const Signin = () => {
         <div className="w-4/5 mx-auto mb-6">
           <button
             type="submit"
-            className={`w-full  text-white text-sm h-10 ${!clicked ? 'bg-black' :'bg-white border-2 border-gray-600'} rounded-sm flex justify-center items-center`}
+            className={`w-full  text-white text-sm h-10 ${
+              !clicked ? "bg-black" : "bg-white border-2 border-gray-600"
+            } rounded-sm flex justify-center items-center`}
           >
-           {clicked ? <span>
-              <Image src={Loading}  className="loading w-4 h-4" alt=""/>
-             </span> :
-            <span>Access</span> }
+            {clicked ? (
+              <span>
+                <Image src={Loading} className="loading w-4 h-4" alt="" />
+              </span>
+            ) : (
+              <span>Access</span>
+            )}
           </button>
         </div>
         <div className="w-4/5 mb-3 mx-auto flex justify-center items-center">
