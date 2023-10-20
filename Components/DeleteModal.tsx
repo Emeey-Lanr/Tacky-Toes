@@ -12,7 +12,7 @@ const DeleteModal = () => {
       <>
         {deleteModalDetails.modal_state && (
           <div className="modal-bg w-full h-full fixed top-0 flex justify-center items-center">
-            <div className="w-96 py-5 rounded-md bg-black">
+            <div className="w-96 py-5 rounded-md bg-black modal:w-11/12">
               <div className="w-4/5 mx-auto  flex justify-end items-center">
                 <button
                   className="h-6 w-6 flex  justify-center items-center border border-white rounded-full text-white"

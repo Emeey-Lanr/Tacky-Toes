@@ -12,7 +12,7 @@ module.exports = {
     
 
       md: "768px",
-  
+   
 
       lg: "1024px",
    
@@ -20,7 +20,8 @@ module.exports = {
     
 
       "2xl": "1536px",
-      hideNav:'951px',
+      hideNav: '951px',
+     modal:{min:"1px", max:"500px"},
       dashboardNav:{min:"1px" , max:"950px"}
     },
     extend: {

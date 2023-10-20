@@ -24,7 +24,7 @@ const DashBoardNav = () => {
         </div>
       </div>
       <div className="w-11/12 ml-auto border-b border-gray-300 h-1" />
-      <div className="w-3/5 flex items-center mx-auto py-8">
+      <div className="w-3/5 flex items-center mx-auto py-8 modal:w-11/12">
         <input
           type="text"
           className="h-10 rounded-l-lg w-full border border-gray-300 border-r-0"
@@ -34,12 +34,12 @@ const DashBoardNav = () => {
         </button>
       </div>
 
-      <div className="w-4/5  mx-auto flex justify-between items-center">
+      <div className="w-4/5  mx-auto flex justify-between items-center modal:w-11/12">
         <div className="hidden dashboardNav:block">
           <button onClick={()=>setOpenSidebar("")}>
-            <span className="block w-10 h-1 mb-1 rounded-md bg-black"></span>
-            <span className="block w-10 h-1 mb-1 rounded-md bg-black"></span>
-            <span className="block w-10 h-1 mb-1 rounded-md bg-black"></span>
+            <span className="block w-8 h-1 mb-1 rounded-md bg-black"></span>
+            <span className="block w-8 h-1 mb-1 rounded-md bg-black"></span>
+            <span className="block w-8 h-1 mb-1 rounded-md bg-black"></span>
           </button>
         </div>
         <div className="flex items-center  h-20  dashboardNav:hidden">
