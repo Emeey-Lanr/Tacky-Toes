@@ -1,4 +1,7 @@
 export const appContextSchema = {
+  user_endpoint:"",
+  clicked:true,
+  setClicked:(cliked:boolean)=>{},
   openExitDeleteModal: (
     modal_state: boolean,
     modal_message: string,

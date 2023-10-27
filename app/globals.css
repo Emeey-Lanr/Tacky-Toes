@@ -48,16 +48,36 @@ outline: 2px solid #00000062;
   grid-template-columns: 30% 30% 30%;
   justify-content: space-between;
 }
-
+.email-input-data{
+  display: grid;
+  width: 100%;
+  grid-template-columns: 20% 20% 20% 20%;
+  justify-content: space-between;
+}
+.pro{
+  display: grid;
+  justify-content: space-between;
+  grid-template-columns: 40% 40%;
+}
 @media (max-width:950px){
   .h-grid{
     width: 80%;
   grid-template-columns: 45% 45%;
 }
+.pro{
+  grid-template-columns: 45% 45%;
+}
+.pro h1{
+  font-size: 2rem;
+   font-weight: 400;
+}
 }
 
 @media (max-width:650px){
   .h-grid{
+    grid-template-columns: 100%;
+  }
+  .pro{
     grid-template-columns: 100%;
   }
 }

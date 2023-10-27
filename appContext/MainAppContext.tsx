@@ -1,6 +1,6 @@
 // Remeber to create  a function that cut accross for error message
 'use client'
-import { createContext } from "react"
+import { createContext, useState } from "react"
 import { appContextSchema } from "./ContextSchema"
 import { changeDeleteModalState } from "@/Redux/Constituents/DeleteModalS"
 import { changeErrorMessage } from "@/Redux/Constituents/Error"
@@ -11,8 +11,11 @@ import { useRouter } from "next/navigation"
 // Create one function for deleteModal also
  export const appContext  = createContext(appContextSchema)
 export const MainAppContext = ({children}:{children:React.ReactNode}) => {
+    const endpoint:string = 'http://localhost:2034'
+    const user_endpoint: string = `${endpoint}/user`
     const dispatch = useDispatch<AppDispatch>()
     const router = useRouter()
+    const [clicked, setClicked] = useState<boolean>(false)
     const errorMessageF = (errorMessage:string) => {
         dispatch(changeErrorMessage(errorMessage))
     }
@@ -29,6 +32,9 @@ export const MainAppContext = ({children}:{children:React.ReactNode}) => {
     return (
         <appContext.Provider
             value={{
+                user_endpoint,
+                clicked,
+                setClicked,
                 openExitDeleteModal,
                 errorMessageF,
                 openProfileModal,

@@ -7,41 +7,63 @@ import { useDispatch } from "react-redux";
 import { AppDispatch } from "@/Redux/store";
 import { appContext } from "@/appContext/MainAppContext";
 import { useContext } from "react";
-import Image from "next/image";
-import sideImg from "@/public/icon/nav-side-icon.svg";
+import axios from "axios";
+
+import Loading from "@/Components/Loading";
+import SideImg from "@/Components/SideImg";
+import { changeErrorMessage } from "@/Redux/Constituents/Error";
+import { useRouter } from "next/navigation";
+
 const Signup = () => {
-  const {errorMessageF} = useContext(appContext)
+  const router = useRouter()
+
+  const { user_endpoint,clicked, setClicked,errorMessageF} = useContext(appContext)
 const dispatch = useDispatch<AppDispatch>()
   const formik = useFormik({
     initialValues: {
-      email: "",
       username: "",
-      phonenumber: -1,
-      password:''
+      email: "",
+      phone_number: -1,
+      password: "",
     },
     onSubmit: async () => {
       try {
-            console.log(formik.values);
-        // const createAccount = await axios.post("/", formik.values)
-        
-      } catch (error) {
-         
+        setClicked(true);
+        const createAccount = await axios.post(
+          `${user_endpoint}/signup`,
+          formik.values
+        );
+        localStorage.emailToken = createAccount.data.info.token
+        setClicked(false)
+        router.push(`/email/verification/${createAccount.data.info.token}`)
+
+      } catch (error: any) {
+        dispatch(changeErrorMessage(`${error.response.data.message}`));
+        setClicked(false);
+        console.log(error);
       }
-   
-       
     },
     validationSchema: yup.object({
-      email: yup.string().email('Enter a valid email').required("Email is required"),
-      username: yup.string().trim().required('Username is required'),
-      phonenumber: yup.number().required().min(10, 'Inavlid Phone number'),
-      password:yup.string().required('Password is required').min(6)
-    })
+      username: yup.string().trim().required("Username is required"),
+      email: yup
+        .string()
+        .email("Enter a valid email")
+        .required("Email is required"),
 
-  })
+      phone_number: yup
+        .number()
+        .required("Phone number is required")
+        .min(10, "Invalid Phone number"),
+      password: yup.string().required("Password is required").min(6),
+    }),
+  });
+
+
+
   return (
     <div className="w-full h-full fixed flex justify-center items-center">
       <div className="w-40 h-full fixed left-0  bg-black dashboardNav:hidden">
-        <Image src={sideImg} alt="sideImage" />
+      <SideImg/>
       </div>
       <form
         onSubmit={formik.handleSubmit}
@@ -56,8 +78,8 @@ const dispatch = useDispatch<AppDispatch>()
             Create An Account
           </p>
         </div>
-        <div className="w-4/5">
-          <Error height="h-4" />
+        <div className="w-4/5 mx-auto">
+          <Error height="h-6" />
         </div>
         <div className="w-4/5 mx-auto mb-2">
           <label className="block text-sm py-1 text-gray-500">Email</label>
@@ -94,13 +116,13 @@ const dispatch = useDispatch<AppDispatch>()
             type="number"
             onBlur={formik.handleBlur}
             onChange={formik.handleChange}
-            name="phonenumber"
+            name="phone_number"
             className={`w-full   pl-2 text-sm rounded-sm h-10 border border-gray-300 ${
-              formik.errors.phonenumber && "error-input"
+              formik.errors.phone_number && "error-input"
             }`}
           />
-          {formik.errors.phonenumber && (
-            <p className="text-xs  text-red-600">{formik.errors.phonenumber}</p>
+          {formik.errors.phone_number && (
+            <p className="text-xs  text-red-600">{formik.errors.phone_number}</p>
           )}
         </div>
         <div className="w-4/5 mx-auto">
@@ -110,6 +132,7 @@ const dispatch = useDispatch<AppDispatch>()
             type="password"
             onBlur={formik.handleBlur}
             name="password"
+            autoComplete=""
             className={`w-full pl-2 text-sm rounded-sm h-10 border border-gray-300 ${
               formik.errors.password && "error-input"
             }`}
@@ -134,16 +157,22 @@ const dispatch = useDispatch<AppDispatch>()
         <div className="w-4/5 mx-auto mb-6">
           <button
             type="submit"
-            className="w-full text-white text-sm h-10 bg-black rounded-sm"
+            className={`w-full text-white text-sm flex justify-center items-center h-10 ${clicked ? 'bg-white border border-gray-300' : 'bg-black'} rounded-sm`}
           >
-            Create
+            {clicked ? (
+              <span>
+             <Loading loadingSize="w-4 h-4" />
+              </span>
+            ) : (
+              <span>Access</span>
+            )}
           </button>
         </div>
         <div className="w-4/5 mb-3 mx-auto flex justify-center items-center">
           <div className="h-10 w-10 flex justify-center items-center rounded-sm border border-gray-300">
             <p className="text-xl font-extrabold">G</p>
           </div>
-          <p className="px-2 text-xs text-gray-400">Signup with google </p>
+          <p  className="px-2 text-xs text-gray-400">Signup with google </p>
         </div>
       </form>
     </div>

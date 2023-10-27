@@ -2,15 +2,13 @@
 import {useFormik} from "formik"
 import * as yup from "yup"
 import Link from "next/link"
-import { useState } from "react"
-import Image from "next/image"
-import Loading from "@/public/icon/loading.svg"
 import { appContext } from "@/appContext/MainAppContext";
 import { useContext } from "react";
-import sideImg from "@/public/icon/nav-side-icon.svg"
+import Loading from "@/Components/Loading"
+import SideImg from "@/Components/SideImg"
 const Signin = () => {
-  const {errorMessageF} = useContext(appContext)
-  const [clicked, setClicked] = useState<boolean>(false)
+  const {clicked,setClicked, errorMessageF} = useContext(appContext)
+   
   const formik = useFormik({
     initialValues: {
       username_email: "",
@@ -27,7 +25,7 @@ const Signin = () => {
   return (
     <div className="w-full h-full fixed flex justify-center items-center">
       <div className="w-40 h-full fixed left-0  bg-black dashboardNav:hidden">
-        <Image src={sideImg} alt="sideImage" />
+     <SideImg/>
       </div>
       <form
         onSubmit={formik.handleSubmit}
@@ -92,7 +90,7 @@ const Signin = () => {
           >
             {clicked ? (
               <span>
-                <Image src={Loading} className="loading w-4 h-4" alt="" />
+                 <Loading loadingSize="w-4 h-4"/>
               </span>
             ) : (
               <span>Access</span>
@@ -104,6 +102,14 @@ const Signin = () => {
             <p className="text-xl font-extrabold">G</p>
           </div>
           <p className="px-2 text-xs text-gray-400">Signup with google </p>
+        </div>
+        <div className="flex pb-4 justify-center items-center ">
+          <Link
+            href="/login/forgotten"
+            className="px-2 rounded-sm font-bold border border-gray-500 text-sm "
+          >
+            Forgot Password
+          </Link>
         </div>
       </form>
     </div>
