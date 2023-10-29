@@ -33,9 +33,9 @@ const dispatch = useDispatch<AppDispatch>()
           `${user_endpoint}/signup`,
           formik.values
         );
-        localStorage.emailToken = createAccount.data.info.token
+     
         setClicked(false)
-        router.push(`/email/verification/${createAccount.data.info.token}`)
+       router.push(`${createAccount.data.info.redirectURL}`)
 
       } catch (error: any) {
         dispatch(changeErrorMessage(`${error.response.data.message}`));

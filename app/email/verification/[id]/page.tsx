@@ -1,14 +1,24 @@
 'use client'
 import sideImg from "@/public/icon/nav-side-icon.svg"
 import Image from "next/image"
-import { KeyboardEvent, ChangeEvent, FormEvent, useContext, useRef } from "react"
+import { ChangeEvent, FormEvent, useContext, useEffect, useRef } from "react"
 import { appContext } from "@/appContext/MainAppContext";
 import { useSelector, useDispatch } from "react-redux"
 import { AppDispatch, RootState } from "@/Redux/store"
 import { emailVerificationChangeDataR } from "@/Redux/Constituents/EmailVerification"
 import Loading from "@/Components/Loading";
+import { usePathname, useSearchParams, useRouter, } from "next/navigation";
+
+import axios from "axios";
+import Error from "@/Components/Error";
+import { changeErrorMessage } from "@/Redux/Constituents/Error";
+
 const EmailVerification = () => {
-   const {clicked} = useContext(appContext)
+  const searchParams = useSearchParams()
+   const email = searchParams.get("email");
+  const router = useRouter()
+  const params = usePathname()
+   const { user_endpoint,clicked, setClicked} = useContext(appContext)
   const dispatch = useDispatch<AppDispatch>()
   const inputRef = useRef<HTMLInputElement>(null)
   const divRef = useRef<any>(null)
@@ -19,6 +29,8 @@ const EmailVerification = () => {
   const handleForm = (e: ChangeEvent<HTMLInputElement>, id: number) => {
     dispatch(emailVerificationChangeDataR({ id, data:`${e.target.value}`}))
   }
+ 
+  
   const handleFormChange = (e: ChangeEvent<HTMLInputElement>, id: number) => {
     let indexChange = 0
      
@@ -43,13 +55,20 @@ const EmailVerification = () => {
       }
        
     }
-//  if(e.target.value )
-//     let user = divRef.current?.children[id];
-//     if (user.value > -1 && user.value < 10) {
-//       id + 1
-//     }
+
+
+  }
+  const submitTokenBtn = async () => {
+    try {
+     setClicked(true)
+      const verifyToken = await axios.put(`${user_endpoint}/verify/email/${params.split("/")[3]}`, {token:formDetails})
+      localStorage.txxxx = verifyToken.data.info.token
+       router.push(`/${verifyToken.data.info.username}`)
       
-//   console.log(inputRef.current, user.focus() )
+    } catch (error: any) {
+      dispatch(changeErrorMessage(`${error.response.data.message}`))
+      setClicked(false)
+    }
   }
   return (
     <div className="w-full h-full fixed flex justify-center items-center">
@@ -69,7 +88,12 @@ const EmailVerification = () => {
              Email Verification
           </p>
         </div>
-
+        <div className="w-4/5 mx-auto">
+          <Error height="h-8"/>
+        </div>
+        <div className="w-4/5 mx-auto">
+          <p className="text-sm text-gray-500" >An email has been sent to <span className="text-gray-700 font-semibold">@{email }</span></p>
+         </div>
               <div className="w-4/5 mx-auto mb-2">
                   
           <label className="block text-sm py-2 text-gray-500">
@@ -84,7 +108,7 @@ const EmailVerification = () => {
         </div>
 
         <div className="w-4/5 mx-auto mb-6">
-          <button
+          <button onClick={()=>submitTokenBtn()}
             type="submit"
             className={`w-full  text-white text-sm h-10 ${
               !clicked ? "bg-black" : "bg-white border-2 border-gray-600"

@@ -125,7 +125,7 @@ const CreateGameBoard = () => {
                     </div>
                   </div>
                   <div className="w-2/5">
-                    <p className="py-1 text-sm text-gray-600">Player's Name</p>
+                    <p className="py-1 text-sm text-gray-600"> Player's Name</p>
                     <div className="h-10 w-full bg-black rounded-md text-sm text-white">
                       <p></p>
                     </div>
