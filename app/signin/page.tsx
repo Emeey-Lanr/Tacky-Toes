@@ -6,16 +6,37 @@ import { appContext } from "@/appContext/MainAppContext";
 import { useContext } from "react";
 import Loading from "@/Components/Loading"
 import SideImg from "@/Components/SideImg"
+import axios from "axios";
+import Error from "@/Components/Error";
+import { changeErrorMessage } from "@/Redux/Constituents/Error";
+import { useDispatch } from "react-redux";
+import { AppDispatch } from "@/Redux/store";
+import { useRouter } from "next/navigation";
 const Signin = () => {
-  const {clicked,setClicked, errorMessageF} = useContext(appContext)
-   
+  const {user_endpoint,clicked,setClicked, errorMessageF} = useContext(appContext)
+  const dispatch = useDispatch<AppDispatch>()
+  const router =  useRouter()
   const formik = useFormik({
     initialValues: {
       username_email: "",
       password:""
     },
-    onSubmit: () => {
-      setClicked(true)
+    onSubmit: async () => {
+      try {
+        setClicked(true);
+        const signIn = await axios.post(`${user_endpoint}/signin`, formik.values);
+        setClicked(false)
+        if (!signIn.data.info.verified) {
+          router.push(`${signIn.data.info.redirectURL}`)
+        } else {
+           localStorage.txxxx = signIn.data.info.token;
+          router.push(`/${signIn.data.info.username}`)
+        }
+      } catch (error:any) {
+        dispatch(changeErrorMessage(`${error.response.data.message}`));
+        setClicked(false)
+    
+      }      
     },
     validationSchema: yup.object({
       username_email: yup.string().trim().required("Fill in input"),
@@ -25,7 +46,7 @@ const Signin = () => {
   return (
     <div className="w-full h-full fixed flex justify-center items-center">
       <div className="w-40 h-full fixed left-0  bg-black dashboardNav:hidden">
-     <SideImg/>
+        <SideImg />
       </div>
       <form
         onSubmit={formik.handleSubmit}
@@ -40,7 +61,9 @@ const Signin = () => {
             Login Into Account
           </p>
         </div>
-
+        <div className="w-4/5 mx-auto">
+          <Error height="h-8" />
+        </div>
         <div className="w-4/5 mx-auto mb-2">
           <label className="block text-sm py-1 text-gray-500">
             Username/Email
@@ -83,6 +106,7 @@ const Signin = () => {
         </div>
         <div className="w-4/5 mx-auto mb-6">
           <button
+            disabled={clicked}
             type="submit"
             className={`w-full  text-white text-sm h-10 ${
               !clicked ? "bg-black" : "bg-white border-2 border-gray-600"
@@ -90,7 +114,7 @@ const Signin = () => {
           >
             {clicked ? (
               <span>
-                 <Loading loadingSize="w-4 h-4"/>
+                <Loading loadingSize="w-4 h-4" />
               </span>
             ) : (
               <span>Access</span>

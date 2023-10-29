@@ -156,6 +156,7 @@ const dispatch = useDispatch<AppDispatch>()
         </div>
         <div className="w-4/5 mx-auto mb-6">
           <button
+            disabled={clicked}
             type="submit"
             className={`w-full text-white text-sm flex justify-center items-center h-10 ${clicked ? 'bg-white border border-gray-300' : 'bg-black'} rounded-sm`}
           >

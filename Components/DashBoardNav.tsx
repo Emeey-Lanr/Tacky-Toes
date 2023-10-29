@@ -3,9 +3,14 @@ import Image from "next/image"
 import logo from "../public/icon/logo.svg"
 import search from "../public/icon/search.svg"
 import { appContext } from "@/appContext/MainAppContext";
-import { useContext, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import SidebarNav from "./SidebarNav";
+import { useParams } from "next/navigation";
 const DashBoardNav = () => {
+  const params = useParams()
+  useEffect(() => {
+    console.log(params)
+  },[])
   const { buttonNavigation } = useContext(appContext);
   const [openSideBar, setOpenSidebar] = useState<string>('dashboardNav:hidden')
   return (
@@ -36,7 +41,7 @@ const DashBoardNav = () => {
 
       <div className="w-4/5  mx-auto flex justify-between items-center modal:w-11/12">
         <div className="hidden dashboardNav:block">
-          <button onClick={()=>setOpenSidebar("")}>
+          <button onClick={() => setOpenSidebar("")}>
             <span className="block w-8 h-1 mb-1 rounded-md bg-black"></span>
             <span className="block w-8 h-1 mb-1 rounded-md bg-black"></span>
             <span className="block w-8 h-1 mb-1 rounded-md bg-black"></span>
@@ -45,31 +50,44 @@ const DashBoardNav = () => {
         <div className="flex items-center  h-20  dashboardNav:hidden">
           <div className="w-40">
             <button
-              onClick={() => buttonNavigation("home")}
+              onClick={() => buttonNavigation(`${params.dashboard}`)}
               className="h-10 w-40 text-sm border  text-gray-700  border-gray-400 rounded-md  "
             >
               Home
             </button>
           </div>
           <div className="w-40 mx-4">
-            <button className="mx-3 h-10 w-40 text-sm text-gray-700  border border-gray-400 rounded-md">
+            <button
+              onClick={() =>
+                buttonNavigation(`${params.dashboard}/transaction/history`)
+              }
+              className="mx-3 h-10 w-40 text-sm text-gray-700  border border-gray-400 rounded-md"
+            >
               Transac.. History
             </button>
           </div>
           <div className="w-40 mx-4">
-            <button className="mx-3 h-10 w-40 text-sm text-gray-700  border border-gray-400 rounded-md">
+            <button
+              onClick={() => buttonNavigation(`${params.dashboard}/pro`)}
+              className="mx-3 h-10 w-40 text-sm text-gray-700  border border-gray-400 rounded-md"
+            >
               Pro
             </button>
           </div>
           <div className="w-40 mx-4">
-            <button className="mx-3 h-10 w-40 text-sm  text-gray-700 border border-gray-400 rounded-md">
+            <button
+              onClick={() =>
+                buttonNavigation(`${params.dashboard}/profile`)
+              }
+              className="mx-3 h-10 w-40 text-sm  text-gray-700 border border-gray-400 rounded-md"
+            >
               Profile
             </button>
           </div>
         </div>
         <div className="flex justify-center items-center ">
           <button
-            onClick={() => buttonNavigation(`${"Emeey"}/create`)}
+            onClick={() => buttonNavigation(`${params.dashboard}/create`)}
             className="h-10 w-10 text-white font-bold rounded-md bg-black flex justify-center items-center"
           >
             <span className="w-6 h-6 border border-white flex justify-center items-center rounded bg-white text-black">
@@ -80,9 +98,8 @@ const DashBoardNav = () => {
       </div>
 
       <div className="w-11/12 mr-auto border-b border-gray-300 h-1" />
-      <SidebarNav setOpenSidebar={setOpenSidebar} openSideBar={ openSideBar} />
+      <SidebarNav setOpenSidebar={setOpenSidebar} openSideBar={openSideBar} />
     </div>
-    
   );
 }
 
