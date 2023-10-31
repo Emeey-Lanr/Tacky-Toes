@@ -6,12 +6,14 @@ import { appContext } from "@/appContext/MainAppContext";
 import { useContext, useEffect, useState } from "react";
 import SidebarNav from "./SidebarNav";
 import { useParams } from "next/navigation";
+import NameImgNav from "./SkeletonLoading/NameImgNav";
 const DashBoardNav = () => {
+
   const params = useParams()
   useEffect(() => {
     console.log(params)
   },[])
-  const { buttonNavigation } = useContext(appContext);
+  const { buttonNavigation, loadingSkeleton } = useContext(appContext);
   const [openSideBar, setOpenSidebar] = useState<string>('dashboardNav:hidden')
   return (
     <div className="w-full sticky top-0 bg-white">
@@ -19,14 +21,18 @@ const DashBoardNav = () => {
         <div>
           <Image className="w-10 h-10" src={logo} alt="logo" />
         </div>
-        <div className="flex items-center ">
-          <p className="px-2 font-bold">Emeey</p>
-          <Image
-            className="w-7 h-7 rounded-full object-cover"
-            src={logo}
-            alt="user-img"
-          />
-        </div>
+        {loadingSkeleton ? (
+          <NameImgNav />
+        ) : (
+          <div className="flex items-center ">
+            <p className="px-2 font-bold">Emeey</p>
+            <Image
+              className="w-7 h-7 rounded-full object-cover"
+              src={logo}
+              alt="user-img"
+            />
+          </div>
+        )}
       </div>
       <div className="w-11/12 ml-auto border-b border-gray-300 h-1" />
       <div className="w-3/5 flex items-center mx-auto py-8 modal:w-11/12">
@@ -76,9 +82,7 @@ const DashBoardNav = () => {
           </div>
           <div className="w-40 mx-4">
             <button
-              onClick={() =>
-                buttonNavigation(`${params.dashboard}/profile`)
-              }
+              onClick={() => buttonNavigation(`${params.dashboard}/profile`)}
               className="mx-3 h-10 w-40 text-sm  text-gray-700 border border-gray-400 rounded-md"
             >
               Profile

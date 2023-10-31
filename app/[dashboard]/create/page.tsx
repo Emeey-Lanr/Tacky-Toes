@@ -32,7 +32,10 @@ const CreateGameBoard = () => {
       },
         onSubmit: async() => {
           try {
-            gameCreationRef.current?.scrollIntoView()
+            setTimeout(() => {
+                 gameCreationRef.current?.scrollIntoView();
+            },500)
+         
             changeState(1, "Creating Game", "", "", "");
             const createGameAPIRoute = await axios.post("/", {
               formPayload: formik.values,

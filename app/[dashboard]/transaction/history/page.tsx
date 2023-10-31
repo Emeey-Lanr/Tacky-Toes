@@ -4,12 +4,14 @@ import { useContext } from "react";
 import { appContext } from "@/appContext/MainAppContext";
 import DeleteIcon from "@/Components/DeleteIcon";
 import DeleteModal from "@/Components/DeleteModal";
+import TransactionHistorySkeleton from "@/Components/SkeletonLoading/TransactionHistory";
 const Transaction = () => {
     const {openExitDeleteModal} = useContext(appContext)
   return (
     <div>
       <DashBoardNav />
-      <div className="w-full">
+      <TransactionHistorySkeleton/>
+      {/* <div className="w-full">
         <div className=" w-4/5  rounded-md flex justify-between items-center mx-auto border-gray-500 shadow-md my-4">
           <div className="">
             <div className="w-30 h-20 bg-black flex justify-center items-center">
@@ -37,7 +39,7 @@ const Transaction = () => {
             </button>
           </div>
         </div>
-          </div>
+          </div> */}
           <DeleteModal/>
     </div>
   );

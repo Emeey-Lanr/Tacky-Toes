@@ -59,11 +59,40 @@ outline: 2px solid #00000062;
   justify-content: space-between;
   grid-template-columns: 40% 40%;
 }
+
+/* Skeleton Loading */
+.dash-home-skeleton{
+  width: 80%;
+  display: grid;
+  justify-content: space-between;
+  grid-template-columns: 30% 30% 30%;
+  margin-top: 30px;
+}
+
+.animate-skeleton {
+  animation:skeleton infinite 1s running normal;
+}
+@keyframes skeleton {
+  0%{
+    background: #d2d2d2;
+    transition: linear 0.9s ease-in all;
+  }
+  50%{
+    background: #bdbdbd;
+        transition: linear 0.9s ease-in all;
+  }
+100%{
+  background: #dbdbdb;
+      transition: linear 0.9s ease-in all;
+}
+  
+}
 @media (max-width:950px){
   .h-grid{
     width: 80%;
   grid-template-columns: 45% 45%;
 }
+
 .pro{
   grid-template-columns: 45% 45%;
 }
@@ -71,13 +100,20 @@ outline: 2px solid #00000062;
   font-size: 2rem;
    font-weight: 400;
 }
+.dash-home-skeleton{
+  grid-template-columns: 45% 45%;
 }
+}
+
 
 @media (max-width:650px){
   .h-grid{
     grid-template-columns: 100%;
   }
   .pro{
+    grid-template-columns: 100%;
+  }
+  .dash-home-skeleton{
     grid-template-columns: 100%;
   }
 }

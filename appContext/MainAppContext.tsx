@@ -7,14 +7,18 @@ import { changeErrorMessage } from "@/Redux/Constituents/Error"
 import { useDispatch } from "react-redux"
 import { AppDispatch } from "@/Redux/store"
 import { changeProfileModalNumberR } from "@/Redux/Constituents/ProfileModal"
-import { useRouter } from "next/navigation"
+import { useRouter, useParams } from "next/navigation"
+import axios from "axios"
+
 // Create one function for deleteModal also
  export const appContext  = createContext(appContextSchema)
-export const MainAppContext = ({children}:{children:React.ReactNode}) => {
+export const MainAppContext = ({ children }: { children: React.ReactNode }) => {
+    const [loadingSkeleton, setLoading] = useState<boolean>(true)
     const endpoint:string = 'http://localhost:2034'
     const user_endpoint: string = `${endpoint}/user`
     const dispatch = useDispatch<AppDispatch>()
     const router = useRouter()
+    const params = useParams()
     const [clicked, setClicked] = useState<boolean>(false)
     const errorMessageF = (errorMessage:string) => {
         dispatch(changeErrorMessage(errorMessage))
@@ -29,6 +33,28 @@ export const MainAppContext = ({children}:{children:React.ReactNode}) => {
     const buttonNavigation = (routeToPushTo:string) => {
         router.push(`/${routeToPushTo}`)
     }
+    const getUserDetails = async() => {
+        try {
+            if (localStorage.txxxx) {
+                setLoading(true)
+                 const getDetails = await axios.get(`${user_endpoint}/getUser/${params.dashboard}`, {
+                headers: {
+                    "Authorization": `bearer ${localStorage.txxxx}`,
+                    "Accept":"application/json",
+                    "Content-Type": "application/json",
+                    
+                }
+                 })
+                setLoading(false)
+                 console.log(getDetails)
+            } else {
+                router.push("/signin")
+            }
+           
+        } catch (error) {
+            router.push("/signin");
+        }
+    }
     return (
         <appContext.Provider
             value={{
@@ -38,7 +64,9 @@ export const MainAppContext = ({children}:{children:React.ReactNode}) => {
                 openExitDeleteModal,
                 errorMessageF,
                 openProfileModal,
-                buttonNavigation
+                buttonNavigation,
+                getUserDetails,
+                loadingSkeleton,
         }}
         >
             {children}

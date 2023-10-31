@@ -11,4 +11,6 @@ export const appContextSchema = {
   errorMessageF: (errorMessage: string) => {},
   openProfileModal: (modalNumber: number) => {},
   buttonNavigation: (routeToPushTo: string) => {},
+  getUserDetails:()=>{},
+  loadingSkeleton:false,
 };
