@@ -8,14 +8,15 @@ import Loading from "@/Components/Loading"
 import SideImg from "@/Components/SideImg"
 import axios from "axios";
 import Error from "@/Components/Error";
-import { changeErrorMessage } from "@/Redux/Constituents/Error";
-import { useDispatch } from "react-redux";
-import { AppDispatch } from "@/Redux/store";
+
 import { useRouter } from "next/navigation";
 const Signin = () => {
-  const {user_endpoint,clicked,setClicked, errorMessageF} = useContext(appContext)
-  const dispatch = useDispatch<AppDispatch>()
-  const router =  useRouter()
+  const { user_endpoint,
+    clicked, setClicked, errorMessageF,
+    errorSucessBackground,responseF } = useContext(appContext)
+
+  const router = useRouter()
+  
   const formik = useFormik({
     initialValues: {
       username_email: "",
@@ -27,14 +28,18 @@ const Signin = () => {
         const signIn = await axios.post(`${user_endpoint}/signin`, formik.values);
         setClicked(false)
         if (!signIn.data.info.verified) {
+               responseF("", "");
           router.push(`${signIn.data.info.redirectURL}`)
         } else {
+               responseF("", "");
            localStorage.txxxx = signIn.data.info.token;
           router.push(`/${signIn.data.info.username}`)
+     
         }
-      } catch (error:any) {
-        dispatch(changeErrorMessage(`${error.response.data.message}`));
+      } catch (error: any) {
+        responseF(`${error.response.data.message}`, 'bg-red-400')
         setClicked(false)
+          
     
       }      
     },
@@ -51,7 +56,7 @@ const Signin = () => {
       <form
         onSubmit={formik.handleSubmit}
         className="input-size border rounded-md border-gray-300"
-        action=""
+     
       >
         <div className="py-5">
           <h1 className="text-center text-gray-500 font-bold text-xl">
@@ -62,7 +67,7 @@ const Signin = () => {
           </p>
         </div>
         <div className="w-4/5 mx-auto">
-          <Error height="h-8" />
+          <Error background={errorSucessBackground} height="h-8" />
         </div>
         <div className="w-4/5 mx-auto mb-2">
           <label className="block text-sm py-1 text-gray-500">

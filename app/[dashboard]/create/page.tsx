@@ -9,12 +9,12 @@ import loading from "@/public/icon/loading.svg"
 import  {useSelector, useDispatch} from "react-redux"
 import { RootState, AppDispatch } from "@/Redux/store"
 import { phaseCreationChangeR } from "@/Redux/Constituents/CreateGame"
-import { useRef, useContext } from "react"
+import { useRef, useContext, useState } from "react"
 import Error from "@/Components/Error"
 import { appContext } from "@/appContext/MainAppContext"
 
 const CreateGameBoard = () => {
-  const {errorMessageF} = useContext(appContext)
+  const {errorMessageF, errorSucessBackground, responseF} = useContext(appContext)
   const gameCreationRef = useRef<HTMLDivElement>(null)
   const dispatch = useDispatch<AppDispatch>()
   const createGameInfo = useSelector((state: RootState) => state.CreateGame.value)
@@ -25,6 +25,7 @@ const CreateGameBoard = () => {
        );
     
   }
+
     const formik = useFormik({
       initialValues: {
         game_name: "",
@@ -152,7 +153,7 @@ const CreateGameBoard = () => {
 
             {/* Unable to create game, error */}
             {createGameInfo.loading === 3 && (
-              <Error height="h-24"/> 
+              <Error background={errorSucessBackground} height="h-24"/> 
             )}
           </div>
         )}

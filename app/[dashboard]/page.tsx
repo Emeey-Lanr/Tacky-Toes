@@ -5,8 +5,11 @@ import { appContext } from "@/appContext/MainAppContext"
 import { useContext, useEffect } from "react"
 import DeleteIcon from "@/Components/DeleteIcon"
 import DashboardLoading from "@/Components/SkeletonLoading/DashboardLoading"
+import { useSelector } from "react-redux"
+import { RootState } from "@/Redux/store"
 const Dashboard = () => {
-    const {openExitDeleteModal, getUserDetails,loadingSkeleton} = useContext(appContext)
+  const { openExitDeleteModal, getUserDetails, loadingSkeleton } = useContext(appContext)
+  const game = useSelector((state:RootState)=>state.Game.value)
   useEffect(() => {
       getUserDetails()
     },[])
@@ -18,7 +21,7 @@ const Dashboard = () => {
           <DashboardLoading />
         ) : (
           <div>
-            {2 > 1 ? (
+            {game.length > 0 ? (
               <div className="h-grid">
                 <div className="border w-full mt-4  border-gray-300 shadow-md rounded-md  py-4">
                   <div className="w-11/12  mx-auto flex justify-between items-center">
@@ -52,7 +55,16 @@ const Dashboard = () => {
                 </div>
               </div>
             ) : (
-              <div></div>
+              <div className="w-full h-96 flex justify-center items-center">
+                <div>
+                  <h1 className="text-center font-semibold text-5xl text-gray-300 my-4">
+                    No Games Created
+                  </h1>
+                  <h1 className="text-center font-semibold text-4xl text-gray-300 my-4">
+                    Start Creating
+                  </h1>
+                </div>
+              </div>
             )}
           </div>
         )}

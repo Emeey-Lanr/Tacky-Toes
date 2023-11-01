@@ -4,6 +4,8 @@ import Error from "./Constituents/Error"
 import DeleteModalS from "./Constituents/DeleteModalS"
 import ProfileModal from "./Constituents/ProfileModal"
 import EmailVerification from "./Constituents/EmailVerification"
+import User from "./Constituents/User"
+import Game from "./Constituents/Game"
 
 export const store = configureStore({
     reducer: {
@@ -11,7 +13,9 @@ export const store = configureStore({
         Error,
         DeleteModalS,
         ProfileModal,
-        EmailVerification
+        EmailVerification,
+        User,
+        Game
         
     }
 })

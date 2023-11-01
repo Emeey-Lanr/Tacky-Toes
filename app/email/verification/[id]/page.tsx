@@ -1,7 +1,7 @@
 'use client'
 import sideImg from "@/public/icon/nav-side-icon.svg"
 import Image from "next/image"
-import { ChangeEvent, FormEvent, useContext, useEffect, useRef } from "react"
+import { ChangeEvent, FormEvent, useContext, useEffect, useRef, } from "react"
 import { appContext } from "@/appContext/MainAppContext";
 import { useSelector, useDispatch } from "react-redux"
 import { AppDispatch, RootState } from "@/Redux/store"
@@ -11,14 +11,14 @@ import { usePathname, useSearchParams, useRouter, } from "next/navigation";
 
 import axios from "axios";
 import Error from "@/Components/Error";
-import { changeErrorMessage } from "@/Redux/Constituents/Error";
 
 const EmailVerification = () => {
   const searchParams = useSearchParams()
-   const email = searchParams.get("email");
+  const email = searchParams.get("email");
   const router = useRouter()
   const params = usePathname()
-   const { user_endpoint,clicked, setClicked} = useContext(appContext)
+  const { user_endpoint, clicked, setClicked, errorSucessBackground,
+    responseF } = useContext(appContext)
   const dispatch = useDispatch<AppDispatch>()
   const inputRef = useRef<HTMLInputElement>(null)
   const divRef = useRef<any>(null)
@@ -66,8 +66,9 @@ const EmailVerification = () => {
        router.push(`/${verifyToken.data.info.username}`)
       
     } catch (error: any) {
-      dispatch(changeErrorMessage(`${error.response.data.message}`))
+      responseF(`${error.response.data.message}`, 'bg-red-400')
       setClicked(false)
+    
     }
   }
   return (
@@ -89,7 +90,7 @@ const EmailVerification = () => {
           </p>
         </div>
         <div className="w-4/5 mx-auto">
-          <Error height="h-8"/>
+          <Error background={errorSucessBackground} height="h-8"/>
         </div>
         <div className="w-4/5 mx-auto">
           <p className="text-sm text-gray-500" >An email has been sent to <span className="text-gray-700 font-semibold">@{email }</span></p>

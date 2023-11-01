@@ -7,14 +7,19 @@ import { useContext, useEffect, useState } from "react";
 import SidebarNav from "./SidebarNav";
 import { useParams } from "next/navigation";
 import NameImgNav from "./SkeletonLoading/NameImgNav";
+import { useSelector } from "react-redux";
+import { RootState } from "@/Redux/store";
 const DashBoardNav = () => {
 
   const params = useParams()
+  const user = useSelector((state:RootState)=>state.User.value)
+    const { buttonNavigation, loadingSkeleton } = useContext(appContext);
+  const [openSideBar, setOpenSidebar] = useState<string>('dashboardNav:hidden')
   useEffect(() => {
     console.log(params)
   },[])
-  const { buttonNavigation, loadingSkeleton } = useContext(appContext);
-  const [openSideBar, setOpenSidebar] = useState<string>('dashboardNav:hidden')
+
+  
   return (
     <div className="w-full sticky top-0 bg-white">
       <div className="mx-auto py-8 w-4/5 flex justify-between items-center">
@@ -25,12 +30,18 @@ const DashBoardNav = () => {
           <NameImgNav />
         ) : (
           <div className="flex items-center ">
-            <p className="px-2 font-bold">Emeey</p>
-            <Image
-              className="w-7 h-7 rounded-full object-cover"
-              src={logo}
-              alt="user-img"
-            />
+            <p className="px-2 font-bold">{user.username}</p>
+            {user.img_url === "" ? (
+                <div className="h-10 w-10 bg-black rounded-full flex justify-center items-center">
+                  <p className="text-white font-semibold text-2xl">{user.username.split("")[0] }</p>
+              </div>
+            ) : (
+              <Image
+                className="w-7 h-7 rounded-full object-cover"
+                src={logo}
+                alt="user-img"
+              />
+            )}
           </div>
         )}
       </div>

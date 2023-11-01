@@ -3,22 +3,21 @@ import Link from "next/link";
 import {useFormik} from "formik"
 import * as yup from "yup"
 import Error from "@/Components/Error";
-import { useDispatch } from "react-redux";
-import { AppDispatch } from "@/Redux/store";
+
 import { appContext } from "@/appContext/MainAppContext";
-import { useContext } from "react";
+import { useContext, useState } from "react";
 import axios from "axios";
 
 import Loading from "@/Components/Loading";
 import SideImg from "@/Components/SideImg";
-import { changeErrorMessage } from "@/Redux/Constituents/Error";
+
 import { useRouter } from "next/navigation";
 
 const Signup = () => {
   const router = useRouter()
 
-  const { user_endpoint,clicked, setClicked,errorMessageF} = useContext(appContext)
-const dispatch = useDispatch<AppDispatch>()
+  const { user_endpoint,clicked, setClicked,errorMessageF, errorSucessBackground, responseF} = useContext(appContext)
+
   const formik = useFormik({
     initialValues: {
       username: "",
@@ -38,9 +37,10 @@ const dispatch = useDispatch<AppDispatch>()
        router.push(`${createAccount.data.info.redirectURL}`)
 
       } catch (error: any) {
-        dispatch(changeErrorMessage(`${error.response.data.message}`));
+        responseF(`${error.response.data.message}`, 'bg-red-400')
         setClicked(false);
-        console.log(error);
+        
+
       }
     },
     validationSchema: yup.object({
@@ -79,7 +79,7 @@ const dispatch = useDispatch<AppDispatch>()
           </p>
         </div>
         <div className="w-4/5 mx-auto">
-          <Error height="h-6" />
+          <Error background={errorSucessBackground} height="h-6" />
         </div>
         <div className="w-4/5 mx-auto mb-2">
           <label className="block text-sm py-1 text-gray-500">Email</label>

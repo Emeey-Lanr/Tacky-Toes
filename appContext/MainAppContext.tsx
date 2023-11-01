@@ -9,6 +9,8 @@ import { AppDispatch } from "@/Redux/store"
 import { changeProfileModalNumberR } from "@/Redux/Constituents/ProfileModal"
 import { useRouter, useParams } from "next/navigation"
 import axios from "axios"
+import { collectGameDetailsR } from "@/Redux/Constituents/Game"
+import { collectUserDetailsR } from "@/Redux/Constituents/User"
 
 // Create one function for deleteModal also
  export const appContext  = createContext(appContextSchema)
@@ -20,6 +22,7 @@ export const MainAppContext = ({ children }: { children: React.ReactNode }) => {
     const router = useRouter()
     const params = useParams()
     const [clicked, setClicked] = useState<boolean>(false)
+      const [errorSucessBackground, setErrorSuccessBackground] = useState<string>("");
     const errorMessageF = (errorMessage:string) => {
         dispatch(changeErrorMessage(errorMessage))
     }
@@ -32,7 +35,11 @@ export const MainAppContext = ({ children }: { children: React.ReactNode }) => {
     
     const buttonNavigation = (routeToPushTo:string) => {
         router.push(`/${routeToPushTo}`)
-    }
+  }
+   const responseF = (message: string, color: string) => {
+     dispatch(changeErrorMessage(`${message}`));
+     setErrorSuccessBackground(color);
+   };
     const getUserDetails = async() => {
         try {
             if (localStorage.txxxx) {
@@ -46,30 +53,38 @@ export const MainAppContext = ({ children }: { children: React.ReactNode }) => {
                 }
                  })
                 setLoading(false)
-                 console.log(getDetails)
+             
+                 dispatch(collectUserDetailsR(getDetails.data.info.userInfo));
+                dispatch(collectGameDetailsR(getDetails.data.info.allGamesCreatedInfo))
+               
+         
             } else {
                 router.push("/signin")
             }
            
-        } catch (error) {
+        } catch (error:any) {
+      
             router.push("/signin");
         }
     }
     return (
-        <appContext.Provider
-            value={{
-                user_endpoint,
-                clicked,
-                setClicked,
-                openExitDeleteModal,
-                errorMessageF,
-                openProfileModal,
-                buttonNavigation,
-                getUserDetails,
-                loadingSkeleton,
+      <appContext.Provider
+        value={{
+          user_endpoint,
+          clicked,
+          setClicked,
+          openExitDeleteModal,
+          errorMessageF,
+          openProfileModal,
+          buttonNavigation,
+          getUserDetails,
+          loadingSkeleton,
+          errorSucessBackground,
+          setErrorSuccessBackground,
+          responseF
         }}
-        >
-            {children}
-     </appContext.Provider>
-    )
+      >
+        {children}
+      </appContext.Provider>
+    );
 }
