@@ -13,10 +13,10 @@ const DashBoardNav = () => {
 
   const params = useParams()
   const user = useSelector((state:RootState)=>state.User.value)
-    const { buttonNavigation, loadingSkeleton } = useContext(appContext);
+    const { buttonNavigation, loadingSkeleton, getUserDetails } = useContext(appContext);
   const [openSideBar, setOpenSidebar] = useState<string>('dashboardNav:hidden')
   useEffect(() => {
-    console.log(params)
+    getUserDetails()
   },[])
 
   

@@ -14,7 +14,7 @@ import Error from "@/Components/Error"
 import { appContext } from "@/appContext/MainAppContext"
 
 const CreateGameBoard = () => {
-  const {errorMessageF, errorSucessBackground, responseF} = useContext(appContext)
+  const {game_endpoint,errorMessageF, errorSucessBackground, responseF} = useContext(appContext)
   const gameCreationRef = useRef<HTMLDivElement>(null)
   const dispatch = useDispatch<AppDispatch>()
   const createGameInfo = useSelector((state: RootState) => state.CreateGame.value)
@@ -25,7 +25,8 @@ const CreateGameBoard = () => {
        );
     
   }
-
+  const [newGameCreatedDetails, setNewGameCreatedDetails] = useState<{game_name:string, player_username:string, game_id:string}>({game_name:"", player_username:"", game_id:""})
+  const {email, username} = useSelector((state:RootState)=>state.User.value)
     const formik = useFormik({
       initialValues: {
         game_name: "",
@@ -33,15 +34,21 @@ const CreateGameBoard = () => {
       },
         onSubmit: async() => {
           try {
+            const { game_name, player_username } = formik.values
+            let data = {game_name, player_username, email, username}
+             changeState(1, "Creating Game", "", "", "");
             setTimeout(() => {
                  gameCreationRef.current?.scrollIntoView();
             },500)
          
-            changeState(1, "Creating Game", "", "", "");
-            const createGameAPIRoute = await axios.post("/", {
-              formPayload: formik.values,
-            });
-          } catch (error) {
+            const createGameAPIRoute = await axios.post(`${game_endpoint}/create`, data
+            );
+            setNewGameCreatedDetails(createGameAPIRoute.data.info[0])
+             changeState(2, ``, "", "", ""); 
+          
+          } catch (error:any) {
+            console.log(error)
+            responseF(`${error.response.data.message}`,'bg-red-400')
            changeState(3, ``, "","", "" ) 
           }
       },
@@ -124,14 +131,14 @@ const CreateGameBoard = () => {
                 <div className="w-4/5 py-4 mx-auto flex justify-between items-center">
                   <div className="w-2/5">
                     <p className="py-1 text-sm text-gray-600">Game Name</p>
-                    <div className="h-10 w-full bg-black rounded-md text-sm text-white">
-                      <p></p>
+                    <div className="h-10 w-full bg-black rounded-md text-sm flex items-center px-3 text-white">
+                      <p>{ newGameCreatedDetails.game_name}</p>
                     </div>
                   </div>
                   <div className="w-2/5">
                     <p className="py-1 text-sm text-gray-600"> Player's Name</p>
-                    <div className="h-10 w-full bg-black rounded-md text-sm text-white">
-                      <p></p>
+                    <div className="h-10 w-full bg-black rounded-md text-sm flex items-center px-3 text-white">
+                      <p>{newGameCreatedDetails.player_username }</p>
                     </div>
                   </div>
                 </div>
@@ -140,7 +147,7 @@ const CreateGameBoard = () => {
                     <Image className="h-5 w-5" src={linkIcon} alt="" />
                   </div>
                   <p className="text-sm px-3 text-gray-800">
-                    http://localhost:3000/emeey/play/tunde/473474747
+                   {newGameCreatedDetails.game_id}
                   </p>
                 </div>
                 <div className="flex justify-center items-center mt-4">
@@ -153,7 +160,10 @@ const CreateGameBoard = () => {
 
             {/* Unable to create game, error */}
             {createGameInfo.loading === 3 && (
-              <Error background={errorSucessBackground} height="h-24"/> 
+              <div className="w-4/5 mx-auto">
+                <Error background={errorSucessBackground} height="h-24"/> 
+            </div>
+              
             )}
           </div>
         )}

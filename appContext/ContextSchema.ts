@@ -1,10 +1,14 @@
 export const appContextSchema = {
   user_endpoint: "",
+  game_endpoint: "",
+  play_game_endpoint:"",
   clicked: true,
   setClicked: (cliked: boolean) => {},
   openExitDeleteModal: ( modal_state: boolean, modal_message: string,
     modal_text: string,
-    phaseUsage: number
+    phaseUsage: number,
+    componentName:string,
+    data:any
   ) => {},
   errorMessageF: (errorMessage: string) => {},
   openProfileModal: (modalNumber: number) => {},

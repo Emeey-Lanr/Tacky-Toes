@@ -13,7 +13,7 @@ import { useRouter } from "next/navigation";
 const Signin = () => {
   const { user_endpoint,
     clicked, setClicked, errorMessageF,
-    errorSucessBackground,responseF } = useContext(appContext)
+    errorSucessBackground,responseF, buttonNavigation } = useContext(appContext)
 
   const router = useRouter()
   
@@ -27,15 +27,22 @@ const Signin = () => {
         setClicked(true);
         const signIn = await axios.post(`${user_endpoint}/signin`, formik.values);
         setClicked(false)
-        if (!signIn.data.info.verified) {
-               responseF("", "");
-          router.push(`${signIn.data.info.redirectURL}`)
-        } else {
-               responseF("", "");
-           localStorage.txxxx = signIn.data.info.token;
-          router.push(`/${signIn.data.info.username}`)
+        
+          if (!signIn.data.info.verified) {
+            responseF("", "");
+            router.push(`${signIn.data.info.redirectURL}`)
+          } else {
+            responseF("", "");
+            localStorage.txxxx = signIn.data.info.token;
+            if (localStorage.loginToGame) {
+              localStorage.removeItem("loginToGame")
+              router.push(`/${localStorage.gameRoute}`)
+            } else {
+               router.push(`/${signIn.data.info.username}`)
+            }
      
-        }
+          }
+      
       } catch (error: any) {
         responseF(`${error.response.data.message}`, 'bg-red-400')
         setClicked(false)

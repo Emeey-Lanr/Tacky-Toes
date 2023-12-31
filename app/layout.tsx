@@ -1,6 +1,7 @@
 import { MainAppContext } from '@/appContext/MainAppContext';
 import './globals.css'
 import { ReduxProvider } from '@/Redux/provider';
+import { SocketProvider } from '@/socket';
 
 
 export const metadata = {
@@ -18,7 +19,11 @@ export default function RootLayout({
     <html lang="en">
       <body>
         <ReduxProvider>
-          <MainAppContext>{children}</MainAppContext>
+          <MainAppContext>
+            <SocketProvider>
+            {children}
+          </SocketProvider>
+          </MainAppContext>
         </ReduxProvider>
       </body>
     </html>

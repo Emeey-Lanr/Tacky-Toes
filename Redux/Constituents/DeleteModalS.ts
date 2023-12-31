@@ -2,17 +2,21 @@ import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 
 // phase usage is to know what part, cause the delete modal  will 
 // handle different delete from  different delete
-interface DeleteModalValue{
-    modal_state: boolean,
-    modal_message: string,
-    modal_text: string,
-    phaseUsage:number,
+interface DeleteModalValue {
+  modal_state: boolean;
+  modal_message: string;
+  modal_text: string;
+  phaseUsage: number;
+    componentName: string;
+  data: any;
 } 
 const deleteModalValue:DeleteModalValue = {
     modal_state: false,
     modal_message: "",
     modal_text: "",
     phaseUsage: 0,
+    componentName:"",
+    data:""
 }
 export const deleteModalSlice = createSlice({
     name: "deleteModalSlice",
@@ -23,6 +27,8 @@ export const deleteModalSlice = createSlice({
             state.value.modal_message = action.payload.modal_message;
             state.value.modal_text = action.payload.modal_text;
             state.value.phaseUsage = action.payload.phaseUsage;
+            state.value.componentName = action.payload.componentName
+            state.value.data = action.payload.data
         }
         
     }

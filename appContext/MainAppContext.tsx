@@ -16,8 +16,10 @@ import { collectUserDetailsR } from "@/Redux/Constituents/User"
  export const appContext  = createContext(appContextSchema)
 export const MainAppContext = ({ children }: { children: React.ReactNode }) => {
     const [loadingSkeleton, setLoading] = useState<boolean>(true)
-    const endpoint:string = 'http://localhost:2034'
+    const endpoint: string = `${process.env.NEXT_PUBLIC_APP_ENDPOINT}`;
     const user_endpoint: string = `${endpoint}/user`
+  const game_endpoint: string = `${endpoint}/game`
+  const play_game_endpoint:string = `${endpoint}/play/game`
     const dispatch = useDispatch<AppDispatch>()
     const router = useRouter()
     const params = useParams()
@@ -26,9 +28,25 @@ export const MainAppContext = ({ children }: { children: React.ReactNode }) => {
     const errorMessageF = (errorMessage:string) => {
         dispatch(changeErrorMessage(errorMessage))
     }
-    const openExitDeleteModal = (modal_state:boolean, modal_message:string, modal_text:string, phaseUsage:number ) => {
-       dispatch(changeDeleteModalState({modal_state, modal_message, modal_text, phaseUsage }))
-    }  
+    const openExitDeleteModal = (
+      modal_state: boolean,
+      modal_message: string,
+      modal_text: string,
+      phaseUsage: number,
+      componentName: string,
+      data: any
+    ) => {
+      dispatch(
+        changeDeleteModalState({
+          modal_state,
+          modal_message,
+          modal_text,
+          phaseUsage,
+          componentName,
+          data,
+        })
+      );
+    };  
     const openProfileModal = (modalNumber: number) => {
         dispatch(changeProfileModalNumberR(modalNumber))
     }
@@ -71,6 +89,8 @@ export const MainAppContext = ({ children }: { children: React.ReactNode }) => {
       <appContext.Provider
         value={{
           user_endpoint,
+          game_endpoint,
+          play_game_endpoint,
           clicked,
           setClicked,
           openExitDeleteModal,

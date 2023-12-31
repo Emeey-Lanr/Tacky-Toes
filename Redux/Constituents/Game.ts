@@ -1,6 +1,6 @@
 import { PayloadAction, createSlice } from "@reduxjs/toolkit";
 
-interface GAME {
+export interface GAME {
      id :number;
       creator_username :string;
       creator_email :string;

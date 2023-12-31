@@ -9,11 +9,9 @@ import Image from "next/image";
 import { useContext, useEffect } from "react";
 import { useSelector } from "react-redux";
 const Profile = () => {
-  const { openProfileModal, loadingSkeleton, getUserDetails } = useContext(appContext);
+  const { openProfileModal, loadingSkeleton } = useContext(appContext);
   const user = useSelector((state:RootState)=>state.User.value)
-  useEffect(() => {
-    getUserDetails()
-  },[])
+
   return (
     <div>
       <DashBoardNav />
