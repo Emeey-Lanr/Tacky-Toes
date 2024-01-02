@@ -6,6 +6,7 @@ import ProfileModal from "./Constituents/ProfileModal"
 import EmailVerification from "./Constituents/EmailVerification"
 import User from "./Constituents/User"
 import Game from "./Constituents/Game"
+import GameStarted from "./Constituents/GameStarted"
 
 export const store = configureStore({
     reducer: {
@@ -15,7 +16,9 @@ export const store = configureStore({
         ProfileModal,
         EmailVerification,
         User,
-        Game
+        Game,
+        GameStarted
+    
         
     }
 })

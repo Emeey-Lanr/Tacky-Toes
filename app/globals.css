@@ -72,6 +72,29 @@ outline: 2px solid #00000062;
 .animate-skeleton {
   animation:skeleton infinite 1s running normal;
 }
+
+
+/* Joined, route = dashboard/play/username */
+.notificationStyle{
+width: 300px;
+  padding: 10px 0;
+  position: absolute;
+  background: black;
+}
+.notjoined{
+  opacity: 0;
+  top: -70px;
+  
+}
+.joined{
+  top: 0;
+  opacity: 1;
+   transform: translate3d(0, 0, 0);
+  transition-property: opacity, transform;
+  transition-timing-function: ease-in-out;
+  transition-duration: 1s;
+}
+
 @keyframes skeleton {
   0%{
     background: #d2d2d2;

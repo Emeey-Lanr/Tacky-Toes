@@ -22,6 +22,12 @@ const page = () => {
   // -1 on verifying state
   // 0 for owner
   // 1 for notowner
+
+  const [notificationStyle, setNotificationStyle] = useState("notjoined")
+  const [userData, setUserData] = useState<{}>({})
+  const [startMessage, setStartMessage] = useState<string>("")
+  const [startNotificationStatus, setStartNotificationStatus] = useState<boolean>(false)
+
   const verifyUser = async () => {
     try {
       const verify = await axios.get(`${play_game_endpoint}`, {
@@ -33,12 +39,14 @@ const page = () => {
           Accept: "application/Json",
         },
       });
-      console.log(verify.data)
+     
       if (verify.data.info.isOwner) {
         setIsOwner(0)
       }else{
         setIsOwner(1)
       }
+      setUserData(verify.data.gameDetails)
+      const joinGame = await socket?.emit("joinGame", {gameDetails:verify.data.info.gameDetails, isOwner:verify.data.info.isOwner})
     } catch (error: any) {
       if (error.response.data.message === "Redirect-To-Login") {
          localStorage.gameRoute = `${params.dashboard}/play/${params.username}/${params.id}`   
@@ -52,14 +60,39 @@ const page = () => {
     }
   };
 
-  useEffect(() => {
-    console.log(params);
-    socket?.on("id", (data: any) => {
-      console.log(data);
-    });
-    socket?.emit("Hello", { name: "Emeey" });
+  const onePersonHasJoined = ()=> {
+   socket?.on("onePersonJoined", (data)=>{
+     console.log(data)
+   })
+  }
+  
+  const startNotification = ()=>{
+    socket?.on("startGameNotification", (data) => {
+      if (data.startGame) {
+        setNotificationStyle("joined")
+        setStartNotificationStatus(true)
+      } else {
+        setNotificationStyle("notjoined")
+      }
+ 
+    })
+  }
+
+  useEffect( () => {
     verifyUser();
+    startNotification()
   }, []);
+   
+  useEffect(() => {
+    onePersonHasJoined()
+  })
+ 
+  const changeBtn = ()=>{
+    setNotificationStyle("joined")
+  }
+  const startGameBtn = () => {
+    socket?.emit("navigateToStarGame", {navigateToStart:true})
+  }
   return (
     <div className="w-full h-full fixed flex justify-center items-center">
       <div className="w-40 h-full fixed left-0  bg-black dashboardNav:hidden">
@@ -89,13 +122,29 @@ const page = () => {
         </div>}
         {/* For Owner */}
         {isOwner === 0 && <div>
-          <p>Owner</p>
+            <div className="flex justify-center items-center my-5">
+              <Image src={LoadingIcon} alt="loading" className="animate-spin" />
+            </div>
+          {!startNotificationStatus && <p>You can only start the game, if your opponent has joined</p>}
         </div>}
 
         {/* For the user they want to play with */}
         {isOwner === 1 && <div>
-        <p>Player</p>
+           <div className="flex justify-center items-center my-5">
+              <Image src={LoadingIcon} alt="loading" className="animate-spin" />
+            </div>
+         <p className="text-sm">
+            Please wait while the game creator proceed with the game
+          </p>
         </div>}
+        <div className={`notificationStyle ${notificationStyle} rounded-b-md`}>
+          <p className="text-center text-white text-sm py-5 ">Taiwo has joined</p>
+          <div className="w-11/12 mx-auto flex justify-end">
+            <button onClick={()=>startGameBtn()} className="bg-white w-full  h-10 rounded-md">Start</button>
+          </div>
+        </div>
+
+        
        
       </>
     </div>
