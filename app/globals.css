@@ -74,6 +74,23 @@ outline: 2px solid #00000062;
 }
 
 
+
+@keyframes skeleton {
+  0%{
+    background: #d2d2d2;
+    transition: linear 0.9s ease-in all;
+  }
+  50%{
+    background: #bdbdbd;
+        transition: linear 0.9s ease-in all;
+  }
+100%{
+  background: #dbdbdb;
+      transition: linear 0.9s ease-in all;
+}
+  
+}
+
 /* Joined, route = dashboard/play/username */
 .notificationStyle{
 width: 300px;
@@ -94,22 +111,74 @@ width: 300px;
   transition-timing-function: ease-in-out;
   transition-duration: 1s;
 }
+/* Tickatoedesign */
+.tick-tack-toe_p_div{
+  width: 300px;
+  display: grid;
+  grid-template-columns: 4fr 4fr 4fr;
 
-@keyframes skeleton {
-  0%{
-    background: #d2d2d2;
-    transition: linear 0.9s ease-in all;
-  }
-  50%{
-    background: #bdbdbd;
-        transition: linear 0.9s ease-in all;
-  }
-100%{
-  background: #dbdbdb;
-      transition: linear 0.9s ease-in all;
 }
-  
+.tick-tack-toe_p_div div{
+  border: 1px solid black;
+  height: 100px;
 }
+/* top */
+.tick-tack-toe_p_div .box-0, 
+.tick-tack-toe_p_div .box-1,.tick-tack-toe_p_div .box-2{
+  border-top: none;
+}
+/* bottom */
+.tick-tack-toe_p_div .box-6, 
+.tick-tack-toe_p_div .box-7,.tick-tack-toe_p_div .box-8{
+ border-bottom:none;
+}
+/* left */
+.tick-tack-toe_p_div .box-0, 
+.tick-tack-toe_p_div .box-3,.tick-tack-toe_p_div .box-6{
+ border-left: none;
+}
+/* right */
+.tick-tack-toe_p_div .box-2, 
+.tick-tack-toe_p_div .box-5,.tick-tack-toe_p_div .box-8{
+  border-right: none;
+}
+.cross-tm, .cross-m, .cross-bm, .cross-l,
+.cross-lmr, .cross-r, .cross-cr, .cross-cl
+{
+  position:absolute;
+  width:300px;
+  height: 5px;
+  background:black;
+  transition-property:width;
+  transition-duration: 1s;
+  transition-timing-function: ease-in-out;
+}
+.cross-tm{
+ top: 50px;
+}
+.cross-bm{
+  bottom:43px;
+}
+.cross-l{
+  transform:rotate(90deg);
+  left: 100px;
+}
+.cross-r{
+  transform: rotate(90deg);
+  right: 100px;
+}
+.cross-lmr{
+  transform: rotate(90deg);
+}
+.cross-cl{
+  transform: rotate(45deg);
+}
+.cross-cr{
+  transform: rotate(-45deg);
+}
+
+
+
 @media (max-width:950px){
   .h-grid{
     width: 80%;

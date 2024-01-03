@@ -21,7 +21,7 @@ const startedGameDetails: StartedGameDetailsInterface = {
   joined: [],
 };
 export const gameStartedSlice = createSlice({
-    name:"",
+    name:"gameStarted",
     initialState:{value:startedGameDetails},
     reducers: {
         collectDetails: (state, action:PayloadAction<StartedGameDetailsInterface>) => {
