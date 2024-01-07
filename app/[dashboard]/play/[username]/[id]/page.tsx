@@ -8,11 +8,15 @@ import { useParams } from "next/navigation";
 import { appContext } from "@/appContext/MainAppContext";
 import { useSocket } from "@/socket";
 import Error from "@/Components/Error";
-
+ import GamePage from "@/Components/GamePage";
+import { collectDetails } from "@/Redux/Constituents/GameStarted";
+import { useDispatch, useSelector } from "react-redux";
+import { RootState } from "@/Redux/store";
 const page = () => {
   const { socket } = useSocket();
-
+   const dispatch = useDispatch()
   const { play_game_endpoint, buttonNavigation, responseF } = useContext(appContext);
+      const gameDetails = useSelector((state: RootState) => state.GameStarted.value)
   const params = useParams();
   const date = new Date();
   const [currentYear, setCurrentYear] = useState(`${date.getFullYear()}`);
@@ -24,10 +28,13 @@ const page = () => {
   // 1 for notowner
 
   const [notificationStyle, setNotificationStyle] = useState("notjoined")
-  const [userData, setUserData] = useState<{}>({})
+  const [userData, setUserData] = useState<{creator_username:string, player_username:string}>({creator_username:"", player_username:""})
   const [startMessage, setStartMessage] = useState<string>("")
   const [startNotificationStatus, setStartNotificationStatus] = useState<boolean>(false)
-
+  const [opponentName, setOpponentName] = useState<string>("")
+  // I for verification phase
+  // 2 for game phase
+  const [gamePhase, setGamePhase] = useState(1)
   const verifyUser = async () => {
     try {
       const verify = await axios.get(`${play_game_endpoint}`, {
@@ -45,17 +52,23 @@ const page = () => {
       }else{
         setIsOwner(1)
       }
-      setUserData(verify.data.gameDetails)
+      console.log(verify.data,"Lkjhgfds")
+      setUserData(verify.data.info.gameDetails)
       const joinGame = await socket?.emit("joinGame", {gameDetails:verify.data.info.gameDetails, isOwner:verify.data.info.isOwner})
     } catch (error: any) {
-      if (error.response.data.message === "Redirect-To-Login") {
-         localStorage.gameRoute = `${params.dashboard}/play/${params.username}/${params.id}`   
-        localStorage.loginToGame = true
-          buttonNavigation("signin")
+
+      console.log(error)
+      if (error.message === "Network Error") {
+        responseF(`${error.message}`, `bg-red-300`); 
       } else {
-        responseF(`${error.response.data.message}`, `bg-red-300`); 
+        if (error.response.data.message === "Redirect-To-Login") {
+          localStorage.gameRoute = `${params.dashboard}/play/${params.username}/${params.id}`
+          localStorage.loginToGame = true
+          buttonNavigation("signin")
+        } else {
+          responseF(`${error.response.data.message}`, `bg-red-300`);
+        }
       }
-       
         console.log(error);
     }
   };
@@ -69,6 +82,7 @@ const page = () => {
   const startNotification = ()=>{
     socket?.on("startGameNotification", (data) => {
       if (data.startGame) {
+        setOpponentName(`${data.opponentsName}`)
         setNotificationStyle("joined")
         setStartNotificationStatus(true)
       } else {
@@ -78,23 +92,41 @@ const page = () => {
     })
   }
 
+  const gameNavigation = () => {
+    socket?.on("changePhase", (data) => {
+      console.log(data.gameInfo.gameData, ";lkjhgfds")
+    dispatch(collectDetails(data.gameInfo.gameData))
+    setGamePhase(2)
+    })
+  }
+
   useEffect( () => {
     verifyUser();
-    startNotification()
+        onePersonHasJoined();
+         startNotification();
+         gameNavigation();
+
   }, []);
    
-  useEffect(() => {
-    onePersonHasJoined()
-  })
+  
  
   const changeBtn = ()=>{
     setNotificationStyle("joined")
   }
   const startGameBtn = () => {
-    socket?.emit("navigateToStarGame", {navigateToStart:true})
+  
+    socket?.emit("navigateToStartGame", {navigateToStart:true, creator:userData.creator_username, versus:userData.player_username, gameId:params.id, startId:`${params.id}` +  `${params.username}`})
+  }
+  const playBtn = () => {
+    
+  }
+  const checkIt = () => {
+    console.log(gameDetails)
   }
   return (
-    <div className="w-full h-full fixed flex justify-center items-center">
+    <>
+      {gamePhase === 1 ?
+        <div className="w-full h-full fixed flex justify-center items-center">
       <div className="w-40 h-full fixed left-0  bg-black dashboardNav:hidden">
         <SideImg />
       </div>
@@ -138,7 +170,7 @@ const page = () => {
           </p>
         </div>}
         <div className={`notificationStyle ${notificationStyle} rounded-b-md`}>
-          <p className="text-center text-white text-sm py-5 ">Taiwo has joined</p>
+          <p className="text-center text-white text-sm py-5 ">{opponentName} has joined</p>
           <div className="w-11/12 mx-auto flex justify-end">
             <button onClick={()=>startGameBtn()} className="bg-white w-full  h-10 rounded-md">Start</button>
           </div>
@@ -147,7 +179,13 @@ const page = () => {
         
        
       </>
-    </div>
+        </div> :
+     
+       
+        <GamePage/>
+      }
+    </>
+    
   );
 }
 
