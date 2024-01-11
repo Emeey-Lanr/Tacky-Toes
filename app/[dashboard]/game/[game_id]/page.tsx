@@ -71,14 +71,14 @@ const GameDetails = () => {
               <div className="h-10 w-36 bg-black rounded-md flex justify-between items-center">
                 <div className="w-4/12 flex justify-center items-center">
                     <span className="text-gray-100 font-bold ">{gameDetails.creator_username.split("")[0].toUpperCase()}</span>
-                  <span className="text-gray-100 font-bold px-1">0</span>
+                    <span className="text-gray-100 font-bold px-1">{gameDetails.creator_score }</span>
                 </div>
                 <div className="w-4/12 flex justify-center items-center">
                   <h2 className="text-xl text-white">VS</h2>
                 </div>
                 <div className="w-4/12 flex justify-center items-center">
                     <span className="text-gray-100 font-bold ">{gameDetails.player_username.split("")[0].toUpperCase()}</span>
-                  <span className="text-gray-100 font-bold px-1">0</span>
+                    <span className="text-gray-100 font-bold px-1">{ gameDetails.player_score}</span>
                 </div>
               </div>
               <div className="flex items-center py-6">

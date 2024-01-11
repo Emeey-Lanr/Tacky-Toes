@@ -5,9 +5,9 @@ const Error = ({ height, background}: { height: string, background:string }) => 
     return (
       <>
             {errorMessageDetails.errorMessage !== "" &&  <div
-                className={`w-full ${background} flex justify-center items-center py-2 ${height}`}
+                className={`w-full ${background} flex justify-center items-center py-4 px-2 rounded-md ${height}`}
             >
-                <p className="text-sm text-gray-600">{errorMessageDetails.errorMessage}</p>
+                <p className="text-sm text-white">{errorMessageDetails.errorMessage}</p>
             </div>}
       </>
     );

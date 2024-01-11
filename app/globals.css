@@ -142,8 +142,8 @@ width: 300px;
 .tick-tack-toe_p_div .box-5,.tick-tack-toe_p_div .box-8{
   border-right: none;
 }
-.cross-tm, .cross-m, .cross-bm, .cross-l,
-.cross-lmr, .cross-r, .cross-cr, .cross-cl
+.stroke-top, .stroke-horizontal_middle, .stroke-bottom, .stroke-left,
+.stroke-vertical_middle, .stroke-right, .stroke-cross_left, .stroke-cross_right
 {
   position:absolute;
   width:300px;
@@ -153,31 +153,51 @@ width: 300px;
   transition-duration: 1s;
   transition-timing-function: ease-in-out;
 }
-.cross-tm{
+.stroke-top{
  top: 50px;
 }
-.cross-bm{
+.stroke-bottom{
   bottom:43px;
 }
-.cross-l{
+.stroke-right{
   transform:rotate(90deg);
   left: 100px;
 }
-.cross-r{
+.stroke-left{
   transform: rotate(90deg);
   right: 100px;
 }
-.cross-lmr{
+.stroke-vertical_middle{
   transform: rotate(90deg);
 }
-.cross-cl{
+.stroke-cross_left{
   transform: rotate(45deg);
 }
-.cross-cr{
+.stroke-cross_right{
   transform: rotate(-45deg);
 }
 
-
+.gameSendingIndicator{
+  width:100px;
+  height: 5px;
+  border: 1px solid #3e3e3e;
+  overflow: hidden;
+}
+.gameSendingIndicator span{
+  display:block;
+  width: 40px;
+  height:100%;
+  background:black;
+  animation: gameIndicator infinite 1s running normal;
+}
+@keyframes gameIndicator {
+  0%{
+    transform: translateX(-50px);
+  }
+  100%{
+    transform: translateX(50px);
+  }
+}
 
 @media (max-width:950px){
   .h-grid{

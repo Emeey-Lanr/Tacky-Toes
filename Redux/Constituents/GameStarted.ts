@@ -8,8 +8,9 @@ interface StartedGameDetailsInterface {
   creatorScore: number;
   versusScore: number;
   creatorSymbol: string;
-        versusSymbol: string;
+  versusSymbol: string;
   game: string[];
+  whoPlayedLast: string[];
   joined: string[];
   round: number;
 }
@@ -23,6 +24,7 @@ const startedGameDetails: StartedGameDetailsInterface = {
    creatorSymbol:"X",
   versusSymbol: "O",
   game: ["A", "B", "C", "D", "E", "F", "G", "H", "I"],
+  whoPlayedLast:[],
   joined: [],
   round:1,
 };
@@ -33,11 +35,12 @@ export const gameStartedSlice = createSlice({
         collectDetails: (state, action:PayloadAction<StartedGameDetailsInterface>) => {
             state.value = action.payload
       } , 
-      // delete later an experiment
+
       inputDataR: (state, action:PayloadAction<{id:number, value:string}>) => {
          state.value.game[action.payload.id] = action.payload.value 
-        console.log(action.payload.id)
-      }
+      
+      },
+
     }
 
 })

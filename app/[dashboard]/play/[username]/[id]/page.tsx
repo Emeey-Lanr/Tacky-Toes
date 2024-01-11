@@ -131,6 +131,10 @@ const page = () => {
         <SideImg />
       </div>
       <>
+      
+         <div className="fixed top-0">
+          <Error height="h-full" background="bg-red-800"/>
+        </div>
         {/* Verification */}
         {isOwner === -1 && <div className="flex justify-center items-center">
           <div>
@@ -182,7 +186,7 @@ const page = () => {
         </div> :
      
        
-        <GamePage/>
+        <GamePage isOwner={isOwner} />
       }
     </>
     
