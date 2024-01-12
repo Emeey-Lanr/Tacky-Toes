@@ -12,8 +12,10 @@ import { phaseCreationChangeR } from "@/Redux/Constituents/CreateGame"
 import { useRef, useContext, useState } from "react"
 import Error from "@/Components/Error"
 import { appContext } from "@/appContext/MainAppContext"
+import { useSocket } from "@/socket"
 
 const CreateGameBoard = () => {
+  const {socket} = useSocket()
   const {game_endpoint,errorMessageF, errorSucessBackground, responseF} = useContext(appContext)
   const gameCreationRef = useRef<HTMLDivElement>(null)
   const dispatch = useDispatch<AppDispatch>()
@@ -43,6 +45,10 @@ const CreateGameBoard = () => {
          
             const createGameAPIRoute = await axios.post(`${game_endpoint}/create`, data
             );
+            socket?.emit("sendNotification", {
+              info: data,
+              game_id: createGameAPIRoute.data.info[0].game_id,
+            }); 
             setNewGameCreatedDetails(createGameAPIRoute.data.info[0])
              changeState(2, ``, "", "", ""); 
           

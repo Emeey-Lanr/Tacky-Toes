@@ -11,10 +11,13 @@ import { useRouter, useParams } from "next/navigation"
 import axios from "axios"
 import { collectGameDetailsR } from "@/Redux/Constituents/Game"
 import { collectUserDetailsR } from "@/Redux/Constituents/User"
+import { useSocket } from "@/socket"
+import { notificationOnloadR } from "@/Redux/Constituents/Notification"
 
 // Create one function for deleteModal also
  export const appContext  = createContext(appContextSchema)
 export const MainAppContext = ({ children }: { children: React.ReactNode }) => {
+  const {socket} = useSocket()
     const [loadingSkeleton, setLoading] = useState<boolean>(true)
     const endpoint: string = `${process.env.NEXT_PUBLIC_APP_ENDPOINT}`;
     const user_endpoint: string = `${endpoint}/user`
@@ -70,10 +73,18 @@ export const MainAppContext = ({ children }: { children: React.ReactNode }) => {
                     
                 }
                  })
-                setLoading(false)
+              setLoading(false)
+             
              
                  dispatch(collectUserDetailsR(getDetails.data.info.userInfo));
-                dispatch(collectGameDetailsR(getDetails.data.info.allGamesCreatedInfo))
+              dispatch(collectGameDetailsR(getDetails.data.info.allGamesCreatedInfo))
+              dispatch(
+                notificationOnloadR(getDetails.data.info.userNotification)
+              );
+              console.log(getDetails.data.info.userInfo.username);
+               socket?.emit("joinSocketApp", {
+                username: getDetails.data.info.userInfo.username,
+              });
                
          
             } else {

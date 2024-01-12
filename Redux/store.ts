@@ -7,6 +7,7 @@ import EmailVerification from "./Constituents/EmailVerification"
 import User from "./Constituents/User"
 import Game from "./Constituents/Game"
 import GameStarted from "./Constituents/GameStarted"
+import Notification from "./Constituents/Notification"
 
 export const store = configureStore({
     reducer: {
@@ -17,7 +18,8 @@ export const store = configureStore({
         EmailVerification,
         User,
         Game,
-        GameStarted
+        GameStarted,
+        Notification
     
         
     }
