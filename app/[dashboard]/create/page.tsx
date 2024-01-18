@@ -53,7 +53,6 @@ const CreateGameBoard = () => {
              changeState(2, ``, "", "", ""); 
           
           } catch (error:any) {
-            console.log(error)
             responseF(`${error.response.data.message}`,'bg-red-400')
            changeState(3, ``, "","", "" ) 
           }

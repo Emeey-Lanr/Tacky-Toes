@@ -25,7 +25,7 @@ const DashBoardNav = () => {
   const [openCloseNotification, setOpenCloseNotification] = useState(false)
   const notificationSocket = ()=>{
     socket?.on("incomingNotification", (data:any) => {
-      console.log(data)
+     
        dispatch(newNotificationR(data.notification))
     })
   }

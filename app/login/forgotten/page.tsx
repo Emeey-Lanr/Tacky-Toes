@@ -2,17 +2,31 @@
 import { useFormik } from "formik"
 import * as yup from "yup"
 import { appContext } from "@/appContext/MainAppContext"
-import { useContext } from "react"
+import { useContext, useState } from "react"
 import Loading from "@/Components/Loading"
 import SideImg from "@/Components/SideImg"
+import axios from "axios"
+import Error from "@/Components/Error"
 const PasswordReset = () => {
-      const {clicked} = useContext(appContext)
+  const { clicked, setClicked, user_endpoint, errorMessageF } = useContext(appContext)
+  const [errorSuccess, setErrorSuccess] = useState("")
     const formik = useFormik({
         initialValues: {
             email_username:""
         },
-        onSubmit: () => {
-            
+        onSubmit: async () => {
+          try {
+              setClicked(true)
+              const verifyForgotPassword = await axios.post(`${user_endpoint}/verifyForgotPassword`, {emailOrUsernameData:formik.values.email_username})
+                errorMessageF(`${verifyForgotPassword.data.info}`)
+              console.log(verifyForgotPassword)
+              setErrorSuccess("bg-green-500")
+            } catch (error: any) {
+              setErrorSuccess("bg-red-500")
+            errorMessageF(`${error.response.data.message}`)
+            setClicked(false)
+           
+            }
         },
         validationSchema: yup.object({
             email_username:yup.string().required('Fill in input')
@@ -36,6 +50,10 @@ const PasswordReset = () => {
             Forgot Password
           </p>
         </div>
+        <div className="w-4/5 mx-auto">
+          <Error height="" background={errorSuccess} />
+        </div>
+       
         <div className="w-4/5 mx-auto mb-2">
           <label className="block text-sm py-1 text-gray-500">
             Enter your Username or Email

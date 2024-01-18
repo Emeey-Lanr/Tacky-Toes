@@ -32,7 +32,7 @@ const page = () => {
   const [startMessage, setStartMessage] = useState<string>("")
   const [startNotificationStatus, setStartNotificationStatus] = useState<boolean>(false)
   const [opponentName, setOpponentName] = useState<string>("")
-  // I for verification phase
+  // 1 for verification phase
   // 2 for game phase
   const [gamePhase, setGamePhase] = useState(1)
   const verifyUser = async () => {
@@ -52,12 +52,10 @@ const page = () => {
       }else{
         setIsOwner(1)
       }
-      console.log(verify.data,"Lkjhgfds")
+      
       setUserData(verify.data.info.gameDetails)
       const joinGame = await socket?.emit("joinGame", {gameDetails:verify.data.info.gameDetails, isOwner:verify.data.info.isOwner})
     } catch (error: any) {
-
-      console.log(error)
       if (error.message === "Network Error") {
         responseF(`${error.message}`, `bg-red-300`); 
       } else {
@@ -69,13 +67,13 @@ const page = () => {
           responseF(`${error.response.data.message}`, `bg-red-300`);
         }
       }
-        console.log(error);
+  
     }
   };
 
   const onePersonHasJoined = ()=> {
    socket?.on("onePersonJoined", (data)=>{
-     console.log(data)
+
    })
   }
   
@@ -94,7 +92,6 @@ const page = () => {
 
   const gameNavigation = () => {
     socket?.on("changePhase", (data) => {
-      console.log(data.gameInfo.gameData, ";lkjhgfds")
     dispatch(collectDetails(data.gameInfo.gameData))
     setGamePhase(2)
     })
@@ -117,12 +114,8 @@ const page = () => {
   
     socket?.emit("navigateToStartGame", {navigateToStart:true, creator:userData.creator_username, versus:userData.player_username, gameId:params.id, startId:`${params.id}` +  `${params.username}`})
   }
-  const playBtn = () => {
-    
-  }
-  const checkIt = () => {
-    console.log(gameDetails)
-  }
+
+
   return (
     <>
       {gamePhase === 1 ?

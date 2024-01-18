@@ -45,7 +45,6 @@ const EmailVerification = () => {
       } 
       if (e.target.value === '') {
         dispatch(emailVerificationChangeDataR({ id, data: `${e.target.value}` }));
-        console.log(id)
         if ((id - 1) > -1) {
          
            const input = divRef.current?.children[id - 1];

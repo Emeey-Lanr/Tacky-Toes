@@ -2,10 +2,13 @@ import { Dispatch, SetStateAction } from "react";
 
 const GameInstructionModal = ({ setInstructionModalSwitch }: { setInstructionModalSwitch: Dispatch<SetStateAction<boolean>>}) => {
   return (
-    <div className="w-full h-full fixed top-0 modal-bg flex justify-center items-center">
-      <div className="bg-white px-7 rounded-md pt-2 pb-5 w-96">
+    <div className="w-full h-full fixed top-0 modal-bg flex justify-center items-center ">
+      <div className="bg-white px-7 rounded-md pt-2 pb-5 w-96 modal:w-11/12">
         <div className="flex justify-end">
-          <button onClick={()=>setInstructionModalSwitch(false)} className="w-10 h-10 ml-auto border text-white  border-black bg-black hover:bg-white hover:text-black rounded-full flex justify-center items-center">
+          <button
+            onClick={() => setInstructionModalSwitch(false)}
+            className="w-10 h-10 ml-auto border text-white  border-black bg-black hover:bg-white hover:text-black rounded-full flex justify-center items-center"
+          >
             <span className="text-1xl font-medium ">X</span>
           </button>
         </div>

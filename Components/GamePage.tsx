@@ -29,7 +29,6 @@ const GamePage = ({ isOwner }: { isOwner: number }) => {
   const noWinnerContinueS = () => {
     socket?.on("continueGame", (data) => {
       setPlayingControl(false)
-      console.log(data)
       dispatch(collectDetails(data.gameInfo))
 
     });
@@ -138,57 +137,61 @@ const playBtn = (id: number) => {
           <SideImg />
         </div>
         <div>
-          <div className="flex justify-center absolute top-0 py-3">
+          <div className="flex justify-center absolute top-0 py-3 modal:left-0 modal:right-0">
             <div className="">
-              <div className="bg-black h-12  w-96 flex justify-between items-center rounded-full">
+              <div className="bg-black h-12  w-96 flex justify-between items-center rounded-full modal:w-72">
                 <div className="w-1/3 relative flex items-center justify-between">
-                  <div className="h-11 w-11 bg-white rounded-full flex justify-center items-center">
+                  <div className="h-11 w-11 bg-black border border-white text-white  flex justify-center items-center">
                     <span className="text-2xl font-bold">
                       {gameDetails.creatorScore}
                     </span>
                   </div>
 
-                  <div className=" w-3/4">
+                  <div className="">
                     <div className="w-full">
-                      <p className="text-white text-sm font-bold">{gameDetails.creator }</p>
+                      <p className="text-white text-sm font-bold w-14 overflow-x-hidden text-ellipsis mx-auto">
+                        {gameDetails.creator}
+                      </p>
                       <span
                         style={{ marginBottom: "-30px" }}
-                        className="w-full font-bold bg-white rounded-full flex justify-center items-center"
+                        className="w-full font-bold bg-white rounded-sm border border-black flex justify-center items-center"
                       >
-                         {gameDetails.creatorSymbol}
+                        {gameDetails.creatorSymbol}
                       </span>
                     </div>
                   </div>
                 </div>
                 <div className=" w-1/4 bg-white h-14 border border-black rounded-md flex justify-center items-center">
-                  <span className="text-5xl ">{ gameDetails.round}</span>
+                  <span className="text-5xl ">{gameDetails.round}</span>
                 </div>
                 <div className="w-1/3 relative flex items-center justify-between">
                   <div className="">
                     <div>
-                      <p className="text-white text-sm font-bold">{ gameDetails.versus}</p>
+                      <p className="text-white text-sm font-bold w-14 overflow-x-hidden text-ellipsis mx-auto">
+                        {gameDetails.versus}
+                      </p>
                       <span
                         style={{ marginBottom: "-30px" }}
-                        className="w-full font-bold bg-white rounded-full flex justify-center items-center"
+                        className="w-full font-bold bg-white rounded-sm border border-black flex justify-center items-center"
                       >
                         {gameDetails.versusSymbol}
                       </span>
                     </div>
                   </div>
 
-                  <div className="h-11 w-11 bg-white rounded-full flex justify-center items-center">
-                    <span className="text-2xl font-bold">{gameDetails.versusScore }</span>
+                  <div className="h-11 w-11 bg-black border border-white text-white flex justify-center items-center">
+                    <span className="text-2xl font-bold">
+                      {gameDetails.versusScore}
+                    </span>
                   </div>
                 </div>
               </div>
-             
             </div>
-            <div className="fixed bottom-10">
-              <Error height="h-6" background="bg-red-700"/>
+            <div className="fixed bottom-10 modal:w-11/12 modal:mx-auto">
+              <Error height="h-6" background="bg-red-700" />
             </div>
-            
           </div>
-          <div className="flex justify-center items-center relative">
+          <div className="flex justify-center items-center relative ml-12 modal:ml-0">
             <div className="tick-tack-toe_p_div">
               {gameDetails.game.map((value, id: number) => (
                 <div
@@ -204,9 +207,8 @@ const playBtn = (id: number) => {
                 </div>
               ))}
             </div>
-          
+
             <div className={`stroke-${strokeStyle}`}></div>
-     
           </div>
           {playingControl && (
             <div className="flex justify-center mt-10">
@@ -222,8 +224,12 @@ const playBtn = (id: number) => {
         winner=""
         round={gameDetails.round}
       />
-      {instructionModalSwitch && <GameInstructionModal  setInstructionModalSwitch={setInstructionModalSwitch}/>}
-      {finalGameModalSwitch &&  <FinalGameModal isOwner={isOwner} />}
+      {instructionModalSwitch && (
+        <GameInstructionModal
+          setInstructionModalSwitch={setInstructionModalSwitch}
+        />
+      )}
+      {finalGameModalSwitch && <FinalGameModal isOwner={isOwner} />}
     </>
   );
 }

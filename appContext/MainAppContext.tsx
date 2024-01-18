@@ -81,7 +81,6 @@ export const MainAppContext = ({ children }: { children: React.ReactNode }) => {
               dispatch(
                 notificationOnloadR(getDetails.data.info.userNotification)
               );
-              console.log(getDetails.data.info.userInfo.username);
                socket?.emit("joinSocketApp", {
                 username: getDetails.data.info.userInfo.username,
               });

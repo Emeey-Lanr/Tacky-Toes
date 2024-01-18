@@ -32,7 +32,6 @@ const DeleteModal = () => {
     }
   }
   const deleteBtn = async () => {
-    console.log(deleteModalDetails.data)
     try {
         switch ( Number(deleteModalDetails.phaseUsage)) {
           case 1:

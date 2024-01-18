@@ -28,7 +28,7 @@ outline: 2px solid #00000062;
   width: 0px;
 } */
 .loading{
-  animation:loading infinite 1s  running  normal; 
+  animation: 1s infinite  running  alternate loading; 
 }
 
 @keyframes loading {
@@ -70,7 +70,7 @@ outline: 2px solid #00000062;
 }
 
 .animate-skeleton {
-  animation:skeleton infinite 1s running normal;
+  animation:1s infinite alternate  skeleton;
 }
 
 
@@ -142,7 +142,7 @@ width: 300px;
 .tick-tack-toe_p_div .box-5,.tick-tack-toe_p_div .box-8{
   border-right: none;
 }
-.stroke-top, .stroke-horizontal_middle, .stroke-bottom, .stroke-left,
+.stroke-top, .stroke-horinzontal_middle, .stroke-bottom, .stroke-left,
 .stroke-vertical_middle, .stroke-right, .stroke-cross_left, .stroke-cross_right
 {
   position:absolute;
@@ -234,4 +234,11 @@ width: 300px;
  width: 95%;
  }
  
+}
+
+@media (max-width:300px) {
+  .tick-tack-toe_p_div{
+    width: 250px;
+  }
+  
 }
