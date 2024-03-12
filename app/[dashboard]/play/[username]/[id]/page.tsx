@@ -12,7 +12,7 @@ import Error from "@/Components/Error";
 import { collectDetails } from "@/Redux/Constituents/GameStarted";
 import { useDispatch, useSelector } from "react-redux";
 import { RootState } from "@/Redux/store";
-const page = () => {
+const PlayGame = () => {
   const { socket } = useSocket();
    const dispatch = useDispatch()
   const { play_game_endpoint, buttonNavigation, responseF } = useContext(appContext);
@@ -186,4 +186,4 @@ const page = () => {
   );
 }
 
-export default page
+export default PlayGame
