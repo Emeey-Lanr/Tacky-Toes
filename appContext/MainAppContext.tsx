@@ -14,6 +14,7 @@ import { collectUserDetailsR } from "@/Redux/Constituents/User"
 import { useSocket } from "@/socket"
 import { notificationOnloadR } from "@/Redux/Constituents/Notification"
 
+
 // Create one function for deleteModal also
  export const appContext  = createContext(appContextSchema)
 export const MainAppContext = ({ children }: { children: React.ReactNode }) => {
