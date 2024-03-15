@@ -1,10 +1,10 @@
 'use client'
-import DashBoardNav from "@/Components/DashBoardNav"
+import DashBoardNav from "@/components/DashBoardNav"
 import { useContext } from "react";
 import { appContext } from "@/appContext/MainAppContext";
-import DeleteIcon from "@/Components/DeleteIcon";
-import DeleteModal from "@/Components/DeleteModal";
-import TransactionHistorySkeleton from "@/Components/SkeletonLoading/TransactionHistory";
+import DeleteIcon from "@/components/DeleteIcon";
+import DeleteModal from "@/components/DeleteModal";
+import TransactionHistorySkeleton from "@/components/SkeletonLoading/TransactionHistory";
 const Transaction = () => {
     const {openExitDeleteModal} = useContext(appContext)
   return (

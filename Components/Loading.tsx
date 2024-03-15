@@ -1,12 +1,16 @@
-import Image from "next/image"
-import LoadingIcon from "@/public/icon/loading.svg"
+import Image from "next/image";
+import LoadingIcon from "@/public/icon/loading.svg";
 interface size {
-    loadingSize:string
+  loadingSize: string;
 }
-const Loading = ({loadingSize}:size) => {
+const Loading = ({ loadingSize }: size) => {
   return (
-   < Image src={LoadingIcon} className={`loading ${loadingSize}`} alt="loading" />
-  )
-}
+    <Image
+      src={LoadingIcon}
+      className={`loading ${loadingSize}`}
+      alt="loading"
+    />
+  );
+};
 
-export default Loading
+export default Loading;

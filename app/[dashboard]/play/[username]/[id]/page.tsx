@@ -1,5 +1,5 @@
 "use client"
-import SideImg from "@/Components/SideImg"
+import SideImg from "@/components/SideImg"
 import Image from "next/image";
 import LoadingIcon from "@/public/icon/loading.svg"
 import { useEffect, useState, useContext } from "react";
@@ -7,8 +7,8 @@ import axios from "axios";
 import { useParams } from "next/navigation";
 import { appContext } from "@/appContext/MainAppContext";
 import { useSocket } from "@/socket";
-import Error from "@/Components/Error";
- import GamePage from "@/Components/GamePage";
+import Error from "@/components/Error";
+ import GamePage from "@/components/GamePage";
 import { collectDetails } from "@/Redux/Constituents/GameStarted";
 import { useDispatch, useSelector } from "react-redux";
 import { RootState } from "@/Redux/store";

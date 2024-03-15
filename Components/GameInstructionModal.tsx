@@ -1,6 +1,10 @@
 import { Dispatch, SetStateAction } from "react";
 
-const GameInstructionModal = ({ setInstructionModalSwitch }: { setInstructionModalSwitch: Dispatch<SetStateAction<boolean>>}) => {
+const GameInstructionModal = ({
+  setInstructionModalSwitch,
+}: {
+  setInstructionModalSwitch: Dispatch<SetStateAction<boolean>>;
+}) => {
   return (
     <div className="w-full h-full fixed top-0 modal-bg flex justify-center items-center ">
       <div className="bg-white px-7 rounded-md pt-2 pb-5 w-96 modal:w-11/12">
@@ -25,6 +29,6 @@ const GameInstructionModal = ({ setInstructionModalSwitch }: { setInstructionMod
       </div>
     </div>
   );
-}
+};
 
-export default GameInstructionModal
+export default GameInstructionModal;

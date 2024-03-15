@@ -1,4 +1,4 @@
-import DashBoardNav from "@/Components/DashBoardNav"
+import DashBoardNav from "@/components/DashBoardNav"
 
 const Pro = () => {
     return (

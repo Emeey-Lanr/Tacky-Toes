@@ -3,11 +3,11 @@ import { useFormik } from "formik"
 import * as yup from "yup"
 import { appContext } from "@/appContext/MainAppContext";
 import { useContext, useEffect, useReducer, useState } from "react";
-import Loading from "@/Components/Loading";
-import SideImg from "@/Components/SideImg";
+import Loading from "@/components/Loading";
+import SideImg from "@/components/SideImg";
 import axios from "axios";
 import { useParams } from "next/navigation";
-import Error from "@/Components/Error";
+import Error from "@/components/Error";
 const ResetPassword = () => {
   const { clicked, setClicked, user_endpoint,buttonNavigation, errorMessageF} = useContext(appContext);
   const params = useParams()

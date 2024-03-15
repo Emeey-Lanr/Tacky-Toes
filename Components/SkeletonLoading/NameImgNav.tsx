@@ -7,6 +7,6 @@ const NameImgNav = () => {
       </div>
     </div>
   );
-}
+};
 
-export default NameImgNav
+export default NameImgNav;

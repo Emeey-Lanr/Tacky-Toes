@@ -1,13 +1,13 @@
 'use client'
-import DashBoardNav from "@/Components/DashBoardNav"
+import DashBoardNav from "@/components/DashBoardNav"
 import linkIcon from "@/public/icon/link-icon.svg";
 import Image from "next/image";
 import { appContext } from "@/appContext/MainAppContext";
 import { useContext, useEffect, useState } from "react";
-import DeleteModal from "@/Components/DeleteModal";
+import DeleteModal from "@/components/DeleteModal";
 import axios from "axios";
 import { useParams } from "next/navigation";
-import CurrentGameLoading from "@/Components/SkeletonLoading/CurrentGameLoading";
+import CurrentGameLoading from "@/components/SkeletonLoading/CurrentGameLoading";
 import { GAME } from "@/Redux/Constituents/Game";
 
 const GameDetails = () => {

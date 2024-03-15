@@ -1,10 +1,10 @@
 'use client'
-import DashBoardNav from "@/Components/DashBoardNav"
-import DeleteModal from "@/Components/DeleteModal"
+import DashBoardNav from "@/components/DashBoardNav"
+import DeleteModal from "@/components/DeleteModal"
 import { appContext } from "@/appContext/MainAppContext"
 import { useContext, useEffect } from "react"
-import DeleteIcon from "@/Components/DeleteIcon"
-import DashboardLoading from "@/Components/SkeletonLoading/DashboardLoading"
+import DeleteIcon from "@/components/DeleteIcon"
+import DashboardLoading from "@/components/SkeletonLoading/DashboardLoading"
 import { useSelector } from "react-redux"
 import { RootState } from "@/Redux/store"
 

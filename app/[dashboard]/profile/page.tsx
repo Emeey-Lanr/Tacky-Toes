@@ -1,8 +1,8 @@
 'use client'
-import ChangePassword from "@/Components/ChangePassword";
-import DashBoardNav from "@/Components/DashBoardNav"
-import DeleteAccount from "@/Components/DeleteAccount";
-import ProfileSkeleton from "@/Components/SkeletonLoading/ProfileSkeleton";
+import ChangePassword from "@/components/ChangePassword";
+import DashBoardNav from "@/components/DashBoardNav"
+import DeleteAccount from "@/components/DeleteAccount";
+import ProfileSkeleton from "@/components/SkeletonLoading/ProfileSkeleton";
 import { RootState } from "@/Redux/store";
 import { appContext } from "@/appContext/MainAppContext";
 import Image from "next/image";
