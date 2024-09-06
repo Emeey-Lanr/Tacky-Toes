@@ -8,7 +8,7 @@ import User from "./Constituents/User"
 import Game from "./Constituents/Game"
 import GameStarted from "./Constituents/GameStarted"
 import Notification from "./Constituents/Notification"
-
+import Hide from "./Constituents/Hide"
 export const store = configureStore({
     reducer: {
         CreateGame,
@@ -19,7 +19,8 @@ export const store = configureStore({
         User,
         Game,
         GameStarted,
-        Notification
+        Notification,
+        Hide
     
         
     }

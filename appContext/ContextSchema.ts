@@ -11,7 +11,8 @@ export const appContextSchema = {
     data:any
   ) => {},
   errorMessageF: (errorMessage: string) => {},
-  openProfileModal: (modalNumber: number) => {},
+  openProfileModal: (modalNumber: number) => { },
+  openCloseSideBar:(value:boolean)=>{},
   buttonNavigation: (routeToPushTo: string) => {},
   getUserDetails: () => {},
   loadingSkeleton: false,

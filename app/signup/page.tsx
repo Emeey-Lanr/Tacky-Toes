@@ -2,14 +2,14 @@
 import Link from "next/link";
 import {useFormik} from "formik"
 import * as yup from "yup"
-import Error from "@/Components/Error";
+import Error from "@/components/Error";
 
 import { appContext } from "@/appContext/MainAppContext";
 import { useContext, useState } from "react";
 import axios from "axios";
 
-import Loading from "@/Components/Loading";
-import SideImg from "@/Components/SideImg";
+import Loading from "@/components/Loading";
+import SideImg from "@/components/SideImg";
 
 import { useRouter } from "next/navigation";
 

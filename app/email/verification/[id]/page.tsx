@@ -6,11 +6,11 @@ import { appContext } from "@/appContext/MainAppContext";
 import { useSelector, useDispatch } from "react-redux"
 import { AppDispatch, RootState } from "@/Redux/store"
 import { emailVerificationChangeDataR } from "@/Redux/Constituents/EmailVerification"
-import Loading from "@/Components/Loading";
+import Loading from "@/components/Loading";
 import { usePathname, useSearchParams, useRouter, } from "next/navigation";
 
 import axios from "axios";
-import Error from "@/Components/Error";
+import Error from "@/components/Error";
 
 const EmailVerification = () => {
   const searchParams = useSearchParams()

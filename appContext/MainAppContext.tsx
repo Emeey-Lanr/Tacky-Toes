@@ -13,6 +13,7 @@ import { collectGameDetailsR } from "@/Redux/Constituents/Game"
 import { collectUserDetailsR } from "@/Redux/Constituents/User"
 import { useSocket } from "@/socket"
 import { notificationOnloadR } from "@/Redux/Constituents/Notification"
+import { changeSideBar } from "@/Redux/Constituents/Hide"
 
 
 // Create one function for deleteModal also
@@ -54,8 +55,11 @@ export const MainAppContext = ({ children }: { children: React.ReactNode }) => {
     const openProfileModal = (modalNumber: number) => {
         dispatch(changeProfileModalNumberR(modalNumber))
     }
-    
+    const openCloseSideBar = (value:boolean)=>{
+      dispatch(changeSideBar(value))
+    }
     const buttonNavigation = (routeToPushTo:string) => {
+        dispatch(changeSideBar(false))
         router.push(`/${routeToPushTo}`)
   }
    const responseF = (message: string, color: string) => {
@@ -107,6 +111,7 @@ export const MainAppContext = ({ children }: { children: React.ReactNode }) => {
           openExitDeleteModal,
           errorMessageF,
           openProfileModal,
+          openCloseSideBar,
           buttonNavigation,
           getUserDetails,
           loadingSkeleton,

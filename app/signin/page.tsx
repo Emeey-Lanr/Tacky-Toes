@@ -4,10 +4,10 @@ import * as yup from "yup"
 import Link from "next/link"
 import { appContext } from "@/appContext/MainAppContext";
 import { useContext } from "react";
-import Loading from "@/Components/Loading"
-import SideImg from "@/Components/SideImg"
+import Loading from "@/components/Loading"
+import SideImg from "@/components/SideImg"
 import axios from "axios";
-import Error from "@/Components/Error";
+import Error from "@/components/Error";
 
 import { useRouter } from "next/navigation";
 const Signin = () => {

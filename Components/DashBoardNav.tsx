@@ -12,6 +12,7 @@ import { RootState } from "@/Redux/store";
 import { useSocket } from "@/socket";
 import { newNotificationR, updateViewedR } from "@/Redux/Constituents/Notification";
 import axios from "axios";
+import { changeSideBar } from "@/Redux/Constituents/Hide";
 const DashBoardNav = () => {
   const { socket } = useSocket()
   const {user_endpoint} = useContext(appContext)
@@ -30,7 +31,7 @@ const DashBoardNav = () => {
     })
   }
   useEffect(() => {
-    getUserDetails()
+    // getUserDetails()
     notificationSocket()
        socket?.emit("joinSocketApp", {
                 username: params.dashboard,
@@ -103,7 +104,7 @@ const DashBoardNav = () => {
       <div className="w-3/5 flex items-center mx-auto py-8 modal:w-11/12">
         <input
           type="text"
-          className="h-10 rounded-l-lg w-full border border-gray-300 border-r-0"
+          className="h-10 px-[8px] rounded-l-lg w-full border border-gray-300 border-r-0"
         />
         <button className="h-10 w-12  rounded-r-lg roud bg-black flex justify-center items-center">
           <Image className="w-5 h-5" src={search} alt="search" />
@@ -111,14 +112,14 @@ const DashBoardNav = () => {
       </div>
 
       <div className="w-4/5  mx-auto flex justify-between items-center modal:w-11/12">
-        <div className="hidden dashboardNav:block">
-          <button onClick={() => setOpenSidebar("")}>
+        <div className=" block lmd:hidden">
+          <button onClick={() => dispatch(changeSideBar(true))}>
             <span className="block w-8 h-1 mb-1 rounded-md bg-black"></span>
             <span className="block w-8 h-1 mb-1 rounded-md bg-black"></span>
             <span className="block w-8 h-1 mb-1 rounded-md bg-black"></span>
           </button>
         </div>
-        <div className="flex items-center  h-20  dashboardNav:hidden">
+        <div className="hidden  h-20 lmd:flex lmd:items-center  ">
           <div className="w-40">
             <button
               onClick={() => buttonNavigation(`${params.dashboard}`)}
@@ -170,15 +171,20 @@ const DashBoardNav = () => {
       {openCloseNotification && (
         <div className="w-72 h-72 bg-black fixed top-20 right-6 rounded-md py-2 px-4">
           {notification.map((value, id) => (
-            <p key={id} className=" text-white text-xs w-64 border px-2 py-2 rounded-md">
+            <p
+              key={id}
+              className=" text-white text-xs w-64 border px-2 py-2 rounded-md"
+            >
               <span className="w-2 h-2 bg-white rounded-full block"></span>
-              <span>{ value.game_title}</span>
+              <span>{value.game_title}</span>
               <span className="leading-5 w-64 overflow-x-hidden  text-ellipsis block">
                 {value.notification}
               </span>
               <span className="w-50 overflow-x-hidden  text-ellipsis block ">
                 <a href=" http://localhost:3000/Emeey/play/Lanr/Emeey5nglok0icvs">
-                 {` http://localhost:3000/${value.notification.split(" ")[0].split("@")[1]}/play/${value.username}/${value.game_id}`}
+                  {` http://localhost:3000/${
+                    value.notification.split(" ")[0].split("@")[1]
+                  }/play/${value.username}/${value.game_id}`}
                 </a>
               </span>
             </p>
