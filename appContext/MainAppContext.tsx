@@ -66,6 +66,10 @@ export const MainAppContext = ({ children }: { children: React.ReactNode }) => {
      dispatch(changeErrorMessage(`${message}`));
      setErrorSuccessBackground(color);
    };
+  //  0 loading
+  // 1 success
+  // 2 error
+   const [loadingStageNumb, setLoadingStageNumb] = useState({numb:0, username:""})
     const getUserDetails = async() => {
         try {
             if (localStorage.txxxx) {
@@ -86,6 +90,7 @@ export const MainAppContext = ({ children }: { children: React.ReactNode }) => {
               dispatch(
                 notificationOnloadR(getDetails.data.info.userNotification)
               );
+              setLoadingStageNumb({numb:1, username:`${getDetails.data.info.userInfo.username}`})
                socket?.emit("joinSocketApp", {
                 username: getDetails.data.info.userInfo.username,
               });
@@ -117,7 +122,8 @@ export const MainAppContext = ({ children }: { children: React.ReactNode }) => {
           loadingSkeleton,
           errorSucessBackground,
           setErrorSuccessBackground,
-          responseF
+          responseF,
+          loadingStageNumb
         }}
       >
         {children}
