@@ -1,4 +1,3 @@
-
 const DashboardLoading = () => {
   return (
     <div className="w-4/5 mx-auto dash-home-skeleton">
@@ -43,10 +42,9 @@ const DashboardLoading = () => {
         <div className="py-5 w-full">
           <div className="w-full mx-auto h-10 rounded-md bg-gray-300 animate-pulse"></div>
         </div>
-          </div>
-          
+      </div>
     </div>
   );
-}
+};
 
-export default DashboardLoading
+export default DashboardLoading;

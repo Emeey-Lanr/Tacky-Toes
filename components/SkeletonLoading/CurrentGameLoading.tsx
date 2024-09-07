@@ -1,4 +1,3 @@
-
 const CurrentGameLoading = () => {
   return (
     <div className="w-4/5 mx-auto">
@@ -11,6 +10,6 @@ const CurrentGameLoading = () => {
       <div className="w-full h-8 rounded-md bg-gray-400 animate-pulse my-2"></div>
     </div>
   );
-}
+};
 
-export default CurrentGameLoading
+export default CurrentGameLoading;

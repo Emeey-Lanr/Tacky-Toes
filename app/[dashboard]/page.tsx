@@ -1,13 +1,13 @@
 'use client'
-import DashBoardNav from "@/components/DashBoardNav"
-import DeleteModal from "@/components/DeleteModal"
-import { appContext } from "@/appContext/MainAppContext"
-import { useContext, useEffect } from "react"
-import DeleteIcon from "@/components/DeleteIcon"
-import DashboardLoading from "@/components/SkeletonLoading/DashboardLoading"
-import { useSelector } from "react-redux"
-import { RootState } from "@/Redux/store"
 
+import DashBoardNav from "@/components/DashBoardNav";
+import DeleteModal from "@/components/DeleteModal";
+import { appContext } from "@/appContext/MainAppContext";
+import { useContext, useEffect } from "react";
+import DeleteIcon from "@/components/DeleteIcon";
+import DashboardLoading from "@/components/SkeletonLoading/DashboardLoading";
+import { useSelector } from "react-redux";
+import { RootState } from "@/Redux/store";
 const Dashboard = () => {
   const { openExitDeleteModal,  loadingSkeleton, buttonNavigation } = useContext(appContext)
   const game = useSelector((state: RootState) => state.Game.value)

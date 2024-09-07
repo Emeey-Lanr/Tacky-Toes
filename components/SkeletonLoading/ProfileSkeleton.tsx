@@ -11,6 +11,6 @@ const ProfileSkeleton = () => {
       <div className="w-4/5 mx-auto rounded-md h-10 bg-gray-300 my-4 flex items-center animate-pulse"></div>
     </div>
   );
-}
+};
 
-export default ProfileSkeleton
+export default ProfileSkeleton;

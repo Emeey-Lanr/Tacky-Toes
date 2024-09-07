@@ -6,7 +6,7 @@ import { useContext, useState } from "react"
 import Loading from "@/components/Loading"
 import SideImg from "@/components/SideImg"
 import axios from "axios"
-import Error from "@/Components/Error"
+import Error from "@/components/Error"
 const PasswordReset = () => {
   const { clicked, setClicked, user_endpoint, errorMessageF } = useContext(appContext)
   const [errorSuccess, setErrorSuccess] = useState("")
