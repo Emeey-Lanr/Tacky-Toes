@@ -28,7 +28,7 @@ const DashBoardNav = () => {
     })
   }
   useEffect(() => {
-    // getUserDetails()
+    getUserDetails()
     notificationSocket()
        socket?.emit("joinSocketApp", {
                 username: params.dashboard,
